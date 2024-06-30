@@ -52,7 +52,7 @@ public:
     system(sc_core::sc_module_name nm);
 
 private:
-    sysc::tgfs::core_complex core_complex{"core_complex"};
+    sysc::riscv_vp::core_complex core_complex{"core_complex"};
     scc::router<> ahb_router, apbBridge;
     vpvper::minres::gpio_tl gpio0{"gpio0"};
     vpvper::minres::uart_tl uart0{"uart0"};
@@ -61,8 +61,8 @@ private:
     vpvper::minres::irq_tl irq_ctrl{"irq_ctrl"};
     vpvper::minres::qspi_tl qspi{"qspi"};
 
-    //scc::memory<1_kB, scc::LT> bootloader{"bootloader"};
-    scc::memory<32_kB, scc::LT> mem_ram {"mem_ram"};
+    scc::memory<128_kB, scc::LT> mem_ram {"mem_ram"};
+    scc::memory<8_kB, scc::LT> boot_rom {"boot_rom"};
    
     sc_core::sc_signal<bool, sc_core::SC_MANY_WRITERS> rst_s{"rst_s"}, mtime_int_s{"mtime_int_s"}, msip_int_s{"msip_int_s"};
     

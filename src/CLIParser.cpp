@@ -83,7 +83,7 @@ void CLIParser::build() {
                     "enable gdb server and specify port to use")
             ("backend", po::value<std::string>()->default_value("interp"),
                     "the ISS backend to use, options are: interp, tcc")
-            ("isa", po::value<std::string>()->default_value("tgc5c"),
+            ("isa", po::value<std::string>()->default_value("rv32imac"),
                     "core or isa name to use for simulation, use '?' to get list")
             ("dump-ir",
                     "dump the intermediate representation")

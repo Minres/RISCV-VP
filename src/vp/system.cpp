@@ -13,7 +13,6 @@
 namespace tgc_vp {
 using namespace sc_core;
 using namespace vpvper::minres;
-using namespace sysc::tgfs;
 
 system::system(sc_core::sc_module_name nm)
 : sc_core::sc_module(nm)
