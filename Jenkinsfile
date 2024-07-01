@@ -6,7 +6,7 @@ def getBranch() {
     }
 }
 
-void checkout_tgc_vp() {
+void checkout_riscv_vp() {
 	sh("rm -rf *")
     checkout([
         $class: 'GitSCM',
@@ -25,12 +25,12 @@ void checkout_tgc_vp() {
         ],
         submoduleCfg: [],
         userRemoteConfigs: [
-            [url: 'https://github.com/Minres/TGC-VP.git']
+            [url: 'https://github.com/eyck/RISCV-VP.git']
         ]
     ])
 }
 
-void build_tgc_vp() {
+void build_riscv_vp() {
     try {
         sh("conan profile new default --detect --force")
         sh("conan profile update settings.compiler.libcxx=libstdc++11 default")
@@ -42,8 +42,8 @@ void build_tgc_vp() {
     }
     sh("rm -rf build")
     sh("git submodule update --recursive")
-    sh("cmake -S . -B build  -DWITH_TCC=OFF && cmake --build build -j16")
-    fingerprint 'build/src/tgc-vp'
+    sh("cmake -S . -B build  --preset Release -DWITH_TCC=OFF && cmake --build build -j16")
+    fingerprint 'build/src/riscv-vp'
 }
 
 pipeline {
@@ -56,35 +56,35 @@ pipeline {
     }
 
     stages {
-        stage('TGC-VP pipeline') {
+        stage('RISCV-VP pipeline') {
            parallel {
 	            stage('ubuntu20'){
 	                agent {docker { image 'ubuntu-20.04' } }
 	                stages {
-	                    stage('Checkout on Ubuntu20.04') { steps {    checkout_tgc_vp() }}
-	                    stage('Build') { steps {    build_tgc_vp() }    }
+	                    stage('Checkout on Ubuntu20.04') { steps {    checkout_riscv_vp() }}
+	                    stage('Build') { steps {    build_riscv_vp() }    }
 	                }
 	            }
 	            stage('ubuntu22'){
 	                agent {docker { image 'ubuntu-22.04' } }
 	                stages {
-	                    stage('Checkout on Ubuntu22.04') { steps {    checkout_tgc_vp() }}
-	                    stage('Build') { steps {    build_tgc_vp() }    }
+	                    stage('Checkout on Ubuntu22.04') { steps {    checkout_riscv_vp() }}
+	                    stage('Build') { steps {    build_riscv_vp() }    }
 	                }
 	            }
 	            stage('CentOS7'){
 	                agent {docker { image 'centos7' } }
 	                stages {
-	                    stage('Checkout on Ubuntu') { steps {checkout_tgc_vp()}}
-	                    stage('Build') { steps {build_tgc_vp()}
+	                    stage('Checkout on Ubuntu') { steps {checkout_riscv_vp()}}
+	                    stage('Build') { steps {build_riscv_vp()}
 	                    }
 	                }
 	            }
 	            stage('RockyLinux8'){
 	                agent {docker { image 'rockylinux8' } }
 	                stages {
-	                    stage('Checkout on Ubuntu') { steps {checkout_tgc_vp()}}
-	                    stage('Build') { steps {build_tgc_vp()}
+	                    stage('Checkout on Ubuntu') { steps {checkout_riscv_vp()}}
+	                    stage('Build') { steps {build_riscv_vp()}
 	                    }
 	                }
 	            }
@@ -93,13 +93,13 @@ pipeline {
     }
     post {
         success {
-            rocketSend ":thumbsup: TGC-VP verification run passed, results at ${env.RUN_DISPLAY_URL} " 
+            rocketSend ":thumbsup: RISCV-VP verification run passed, results at ${env.RUN_DISPLAY_URL} " 
         }
         failure {
             archiveArtifacts artifacts: 'failed_seeds_*.txt', followSymlinks: false, onlyIfSuccessful: false 
-            rocketSend ":thumbsdown: TGC-VP verification failed, please check ${env.RUN_DISPLAY_URL} " 
+            rocketSend ":thumbsdown: RISCV-VP verification failed, please check ${env.RUN_DISPLAY_URL} " 
             emailext recipientProviders: [culprits(), requestor()],
-                subject: "TGC-VP Pipeline Failed: ${currentBuild.fullDisplayName}",
+                subject: "RISCV-VP Pipeline Failed: ${currentBuild.fullDisplayName}",
                 body: """
                 <p>Build Status: ${currentBuild.currentResult}</p>
                 <p> Check logs at <a href='${env.BUILD_URL}console'> Build Console Logs </a> or at <a href='${env.RUN_DISPLAY_URL}'> Overview </a></p>
