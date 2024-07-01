@@ -17,7 +17,7 @@
 CMakeSettings.json
 /.venv
 /src-gen/
-/*.json
 /cfg.yaml
 /.direnv
 /.cache
+/CMakeUserPresets.json
