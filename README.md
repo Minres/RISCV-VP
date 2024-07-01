@@ -14,7 +14,7 @@ and follow the instructions. After the build finished you can run
 
 ```
 
-build/src/tgc-vp -f fw/hello-world/prebuilt/hello.elf
+build/src/riscv-vp -f fw/hello-world/prebuilt/hello.elf
 
 ```
 
@@ -30,7 +30,7 @@ ctest
 
 You will see on console the prints of the hello world firmware at fw/hello-world/hello.c
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Minres/TGC-VP)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Minres/RISCV-VP)
 
 ## Build instructions for Linux
 
