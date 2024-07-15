@@ -20,11 +20,11 @@
     <stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_STOP_AT_MAIN_SYMBOL" value="main"/>
     <stringAttribute key="org.eclipse.cdt.launch.PROGRAM_ARGUMENTS" value="-f fw/hello-world/hello&#10;-g 10000"/>
     <stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="build/Debug/src/tgc-vp"/>
-    <stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value="TGC-VP"/>
+    <stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value="RISCV-VP"/>
     <booleanAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_AUTO_ATTR" value="true"/>
     <stringAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_ID_ATTR" value="cdt.managedbuild.toolchain.gnu.base.1730410661"/>
     <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-        <listEntry value="/TGC-VP"/>
+        <listEntry value="/RISCV-VP"/>
     </listAttribute>
     <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
         <listEntry value="4"/>
