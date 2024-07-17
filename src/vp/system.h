@@ -52,7 +52,7 @@ public:
     system(sc_core::sc_module_name nm);
 
 private:
-    sysc::riscv_vp::core_complex core_complex{"core_complex"};
+    sysc::riscv_vp::core_complex<> core_complex{"core_complex"};
     scc::router<> ahb_router, apbBridge;
     vpvper::minres::gpio_tl gpio0{"gpio0"};
     vpvper::minres::uart_tl uart0{"uart0"};
