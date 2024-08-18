@@ -32,9 +32,6 @@ find_package(elfio)
 find_package(Boost REQUIRED COMPONENTS program_options QUIET)
 include(SystemCPackage)
 
-set(CLANG_FORMAT_EXCLUDE_PATTERNS "scc" "dbt-rise-riscv")
-find_package(ClangFormat)
-
 if(ENABLE_COVERAGE)
     include(CodeCoverage)
     append_coverage_compiler_flags()
@@ -58,9 +55,11 @@ if(ENABLE_CLANGTIDY)
     endif()
 endif ()
 
+set(CLANG_FORMAT_EXCLUDE_PATTERNS /build/ /scc/ /dbt-rise-core/ /dbt-rise-riscv/)
 add_subdirectory(scc)
 add_subdirectory(dbt-rise-core)
 add_subdirectory(dbt-rise-riscv)
+
 if(IS_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/dbt-rise-plugins)
 	add_subdirectory(dbt-rise-plugins)
 endif()
@@ -70,6 +69,8 @@ endif()
 if(NOT LIBS_ONLY)
 	add_subdirectory(src)
 endif()
+
+find_package(ClangFormat)
 
 if(FW_BUILD)
 	include(FetchContent)
