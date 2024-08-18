@@ -10,3 +10,6 @@
 [submodule "dbt-rise-riscv"]
 	path = dbt-rise-riscv
 	url = https://github.com/Minres/DBT-RISE-RISCV.git
+[submodule "dbt-rise-core"]
+	path = dbt-rise-core
+	url = https://github.com/Minres/DBT-RISE-Core.git

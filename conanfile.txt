@@ -37,7 +37,7 @@ boost/*:without_wave=True
 fmt/*:header_only=True
 libiconv/*:shared=False
 asmjit/*:shared=False
-systemc/*:shared=False
+systemc/*:shared=True
 systemc/*:disable_virtual_bind=False
 
 [generators]

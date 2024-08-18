@@ -59,6 +59,7 @@ if(ENABLE_CLANGTIDY)
 endif ()
 
 add_subdirectory(scc)
+add_subdirectory(dbt-rise-core)
 add_subdirectory(dbt-rise-riscv)
 if(IS_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/dbt-rise-plugins)
 	add_subdirectory(dbt-rise-plugins)
