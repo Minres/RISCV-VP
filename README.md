@@ -42,7 +42,7 @@ To install conan.io version 2.0 and above (see also http://docs.conan.io/en/late
 python3 -m venv .venv
 . .venv/bin/activate
 pip3 install conan
-conan profile new default --detect
+conan profile detect
 ```
 
 Building the VP is as simple as:

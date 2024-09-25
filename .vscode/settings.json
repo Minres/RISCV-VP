@@ -2,5 +2,16 @@
     "files.associations": {
         "platform.h": "c"
     },
-    "debug.allowBreakpointsEverywhere": true
+    "debug.allowBreakpointsEverywhere": true,
+    "editor.rulers": [
+        {
+            "column": 120,
+            "comment": "clang-format"
+        }
+    ],
+    "cmake.configureArgs": [
+        "--preset",
+        "Debug",
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+    ]
 }

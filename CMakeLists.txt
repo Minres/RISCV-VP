@@ -55,6 +55,7 @@ if(ENABLE_CLANGTIDY)
     endif()
 endif ()
 
+set(USE_SC_SIGNAL4IRQ ON)
 set(CLANG_FORMAT_EXCLUDE_PATTERNS /build/ /scc/ /dbt-rise-core/ /dbt-rise-riscv/)
 add_subdirectory(scc)
 add_subdirectory(dbt-rise-core)
