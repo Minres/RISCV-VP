@@ -4,11 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "../vp/system.h"
+#include "system.h"
 
-#include "minres/timer.h"
-#include "minres/uart.h"
-#include "scc/utilities.h"
+#include <minres/timer.h>
+#include <minres/uart.h>
+#include <scc/utilities.h>
 
 namespace tgc_vp {
 using namespace sc_core;

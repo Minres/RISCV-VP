@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "../vp/tb.h"
-
+#include "tb.h"
 #include <sysc/kernel/sc_time.h>
+
 namespace tgc_vp {
 
 SC_HAS_PROCESS(tb);

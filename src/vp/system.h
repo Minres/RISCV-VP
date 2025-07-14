@@ -7,8 +7,8 @@
 #ifndef _PLATFORM_H_
 #define _PLATFORM_H_
 
-#include "minres/irq.h"
-#include "minres/timer.h"
+#include <minres/irq.h>
+#include <minres/timer.h>
 #include <cci_configuration>
 #include <minres/aclint.h>
 #include <minres/gpio.h>

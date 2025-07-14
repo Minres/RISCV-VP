@@ -7,6 +7,7 @@
 #pragma once
 
 #include <systemc>
+
 namespace tgc_vp {
 
 class rst_gen : public sc_core::sc_module {
