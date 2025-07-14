@@ -7,19 +7,19 @@
 #ifndef SRC_VP_TB_H_
 #define SRC_VP_TB_H_
 
+#include "system.h"
+#include <generic/rst_gen.h>
 #include <generic/spi_mem.h>
 #include <generic/terminal.h>
 #include <systemc>
 
-#include "rst_gen.h"
-#include "system.h"
-namespace tgc_vp {
+namespace vp {
 
 class tb : public sc_core::sc_module {
 public:
     tb(sc_core::sc_module_name const& nm);
-    tgc_vp::system top{"top"};
-    tgc_vp::rst_gen rst_gen{"rst_gen"};
+    vp::system top{"top"};
+    vpvper::generic::rst_gen rst_gen{"rst_gen"};
     sc_core::sc_signal<bool> rst_n{"rst_n"};
     sc_core::sc_vector<sc_core::sc_signal<bool>> pins_o{"pins_o", 32};
     sc_core::sc_vector<sc_core::sc_signal<bool>> pins_oe_o{"pins_oe_o", 32};
@@ -33,6 +33,6 @@ public:
     sc_core::sc_signal<sc_core::sc_time> clk_i{"clk_i"};
 };
 
-} /* namespace tgc_vp */
+} // namespace vp
 
 #endif /* SRC_VP_TB_H_ */

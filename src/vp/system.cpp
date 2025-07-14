@@ -10,7 +10,8 @@
 #include <minres/uart.h>
 #include <scc/utilities.h>
 
-namespace tgc_vp {
+namespace vp {
+
 using namespace sc_core;
 using namespace vpvper::minres;
 
@@ -89,4 +90,4 @@ void system::gen_reset() {
         rst_s = 1;
 }
 
-} // namespace tgc_vp
+} // namespace vp

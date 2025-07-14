@@ -4,15 +4,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _PLATFORM_H_
-#define _PLATFORM_H_
+#ifndef SRC_VP_SYSTEM_H_
+#define SRC_VP_SYSTEM_H_
 
-#include <minres/irq.h>
-#include <minres/timer.h>
 #include <cci_configuration>
 #include <minres/aclint.h>
 #include <minres/gpio.h>
+#include <minres/irq.h>
 #include <minres/qspi.h>
+#include <minres/timer.h>
 #include <minres/uart.h>
 #include <scc/memory.h>
 #include <scc/router.h>
@@ -25,7 +25,7 @@
 #include <sysc/utils/sc_vector.h>
 #include <tlm/scc/tlm_signal_sockets.h>
 
-namespace tgc_vp {
+namespace vp {
 
 class system : public sc_core::sc_module {
 public:
@@ -70,6 +70,6 @@ private:
 #include "../vp/gen/PipelinedMemoryBusToApbBridge.h"
 };
 
-} // namespace tgc_vp
+} // namespace vp
 
-#endif /* _PLATFORM_H_ */
+#endif /* SRC_VP_SYSTEM_H_ */

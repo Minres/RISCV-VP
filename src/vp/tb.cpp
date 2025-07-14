@@ -7,13 +7,13 @@
 #include "tb.h"
 #include <sysc/kernel/sc_time.h>
 
-namespace tgc_vp {
+namespace vp {
 
 SC_HAS_PROCESS(tb);
 tb::tb(const sc_core::sc_module_name& nm)
 : sc_core::sc_module(nm) {
     top.erst_n(rst_n);
-    rst_gen.rst_n(rst_n);
+    rst_gen.rst_o(rst_n);
     top.pins_o(pins_o);
     top.pins_i(pins_i);
     top.pins_oe_o(pins_oe_o);
@@ -25,5 +25,6 @@ tb::tb(const sc_core::sc_module_name& nm)
     spi(0)(qspi_mem.spi_t);
     top.clk_i(clk_i);
     clk_i = 10_ns;
+    rst_gen.active_level = false;
 }
-} // namespace tgc_vp
+} // namespace vp
