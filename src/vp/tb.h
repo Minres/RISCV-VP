@@ -7,11 +7,12 @@
 #ifndef SRC_VP_TB_H_
 #define SRC_VP_TB_H_
 
+#include <generic/spi_mem.h>
 #include <generic/terminal.h>
 #include <systemc>
 
-#include "../vp/rst_gen.h"
-#include "../vp/system.h"
+#include "rst_gen.h"
+#include "system.h"
 namespace tgc_vp {
 
 class tb : public sc_core::sc_module {
@@ -27,10 +28,8 @@ public:
     sc_core::sc_signal<bool> uart0_rx_i{"uart0_rx_i"};
     sc_core::sc_vector<sc_core::sc_signal<bool>> t0_clear_i{"t0_clear_i", vpvper::minres::timer::CLEAR_CNT};
     sc_core::sc_vector<sc_core::sc_signal<bool>> t0_tick_i{"t0_tick_i", vpvper::minres::timer::TICK_CNT - 1};
-    sc_core::sc_signal<bool> ssclk_o{"ssclk_o"};
-    sc_core::sc_vector<sc_core::sc_signal<bool>> dq_o{"dq_o", 4};
-    sc_core::sc_vector<sc_core::sc_signal<bool>> dq_oe_o{"dq_oe_o", 4};
-    sc_core::sc_vector<sc_core::sc_signal<bool>> dq_i{"dq_i", 4};
+    spi::spi_channel spi{"spi", 1};
+    vpvper::generic::spi_mem qspi_mem{"qspi_mem"};
     sc_core::sc_signal<sc_core::sc_time> clk_i{"clk_i"};
 };
 

@@ -9,9 +9,7 @@
 
 #include "minres/irq.h"
 #include "minres/timer.h"
-#include <array>
 #include <cci_configuration>
-#include <memory>
 #include <minres/aclint.h>
 #include <minres/gpio.h>
 #include <minres/qspi.h>
@@ -40,10 +38,7 @@ public:
     sc_core::sc_in<bool> uart0_rx_i{"uart0_rx_i"};
     sc_core::sc_vector<sc_core::sc_in<bool>> t0_clear_i{"t0_clear_i", vpvper::minres::timer::CLEAR_CNT};
     sc_core::sc_vector<sc_core::sc_in<bool>> t0_tick_i{"t0_tick_i", vpvper::minres::timer::TICK_CNT - 1};
-    sc_core::sc_out<bool> ssclk_o{"ssclk_o"};
-    sc_core::sc_vector<sc_core::sc_out<bool>> dq_o{"dq_o", 4};
-    sc_core::sc_vector<sc_core::sc_out<bool>> dq_oe_o{"dq_oe_o", 4};
-    sc_core::sc_vector<sc_core::sc_in<bool>> dq_i{"dq_i", 4};
+    spi::spi_pkt_initiator_socket<> mspi0{"mspi0"};
 
     sc_core::sc_in<sc_core::sc_time> clk_i{"clk_i"};
 

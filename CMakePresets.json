@@ -15,7 +15,8 @@
                 "CMAKE_POLICY_DEFAULT_CMP0091": "NEW",
                 "CMAKE_BUILD_TYPE": "Debug",
                 "CMAKE_CXX_STANDARD": "17",
-                "CMAKE_PROJECT_TOP_LEVEL_INCLUDES":"dbt-rise-riscv/cmake-conan/conan_provider.cmake"
+                "CMAKE_PROJECT_TOP_LEVEL_INCLUDES":"scc/cmake/conan_provider.cmake",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
             }
         },
         {
@@ -24,7 +25,7 @@
                 "CMAKE_POLICY_DEFAULT_CMP0091": "NEW",
                 "CMAKE_BUILD_TYPE": "RelWithDebInfo",
                 "CMAKE_CXX_STANDARD": "17",
-                "CMAKE_PROJECT_TOP_LEVEL_INCLUDES":"dbt-rise-riscv/cmake-conan/conan_provider.cmake"
+                "CMAKE_PROJECT_TOP_LEVEL_INCLUDES":"scc/cmake/conan_provider.cmake"
             }
         },
         {
@@ -33,7 +34,7 @@
                 "CMAKE_POLICY_DEFAULT_CMP0091": "NEW",
                 "CMAKE_BUILD_TYPE": "Release",
                 "CMAKE_CXX_STANDARD": "17",
-                "CMAKE_PROJECT_TOP_LEVEL_INCLUDES":"dbt-rise-riscv/cmake-conan/conan_provider.cmake"
+                "CMAKE_PROJECT_TOP_LEVEL_INCLUDES":"scc/cmake/conan_provider.cmake"
             }
         }
     ]
