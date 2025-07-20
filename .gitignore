@@ -22,3 +22,4 @@ CMakeSettings.json
 /.cache
 /CMakeUserPresets.json
 /.envrc.*
+.clangd

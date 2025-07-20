@@ -4,13 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "../vp/system.h"
+#include "system.h"
 
-#include "minres/timer.h"
-#include "minres/uart.h"
-#include "scc/utilities.h"
+#include <minres/timer.h>
+#include <minres/uart.h>
+#include <scc/utilities.h>
 
-namespace tgc_vp {
+namespace vp {
+
 using namespace sc_core;
 using namespace vpvper::minres;
 
@@ -24,7 +25,7 @@ system::system(sc_core::sc_module_name nm)
     ahb_router.initiator.at(0)(qspi.xip_sck);
     ahb_router.set_target_range(0, 0xE0000000, 16_MB);
     ahb_router.initiator.at(1)(mem_ram.target);
-    ahb_router.set_target_range(1, 0x80000000, 32_kB);
+    ahb_router.set_target_range(1, 0xC0000000, 128_kB);
     ahb_router.initiator.at(2)(apbBridge.target[0]);
     ahb_router.set_target_range(2, 0xF0000000, 256_MB);
 
@@ -77,10 +78,7 @@ system::system(sc_core::sc_module_name nm)
     timer0.clear_i(t0_clear_i);
     timer0.tick_i(t0_tick_i);
 
-    qspi.ssclk_o(ssclk_o);
-    qspi.dq_o(dq_o);
-    qspi.dq_i(dq_i);
-    qspi.oe_o(dq_oe_o);
+    qspi.spi_i(mspi0);
 
     SC_METHOD(gen_reset);
     sensitive << erst_n;
@@ -92,4 +90,4 @@ void system::gen_reset() {
         rst_s = 1;
 }
 
-} // namespace tgc_vp
+} // namespace vp
