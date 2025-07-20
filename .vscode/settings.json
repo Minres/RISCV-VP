@@ -5,13 +5,15 @@
     "debug.allowBreakpointsEverywhere": true,
     "editor.rulers": [
         {
-            "column": 120,
+            "column": 140,
             "comment": "clang-format"
         }
     ],
-    "cmake.configureArgs": [
-        "--preset",
-        "Debug",
-        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
-    ]
+    "clangd.arguments": [
+        "--pretty",
+        "--background-index",
+        "--compile-commands-dir=${workspaceFolder}/build"
+    ],
+    "cmake.copyCompileCommands": "${workspaceFolder}/build/compile_commands.json"
+
 }

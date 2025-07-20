@@ -67,7 +67,7 @@ private:
     sc_core::sc_signal<bool, sc_core::SC_MANY_WRITERS> core_int_s{"core_int_s"};
 
     void gen_reset();
-#include "../vp/gen/PipelinedMemoryBusToApbBridge.h"
+#include "../vp/gen/PipelinedMemoryBusToApbBridge.h" // IWYU pragma: keep
 };
 
 } // namespace vp
