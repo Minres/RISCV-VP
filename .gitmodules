@@ -4,15 +4,12 @@
 [submodule "vpvper"]
 	path = vpvper
 	url = https://github.com/VP-Vibes/VPV-Peripherals.git
-[submodule "tgc-iss/dbt-rise-core"]
-	path = tgc-iss/dbt-rise-core
-	url = https://github.com/Minres/DBT-RISE-Core.git
-[submodule "tgc-iss/dbt-rise-tgc"]
-	path = tgc-iss/dbt-rise-tgc
-	url = https://git.minres.com/DBT-RISE/DBT-RISE-TGC.git
 [submodule "fw/bsp"]
 	path = fw/bsp
 	url = https://git.minres.com/Firmware/MNRS-BM-BSP.git
 [submodule "dbt-rise-riscv"]
 	path = dbt-rise-riscv
 	url = https://github.com/Minres/DBT-RISE-RISCV.git
+[submodule "dbt-rise-core"]
+	path = dbt-rise-core
+	url = https://github.com/Minres/DBT-RISE-Core.git

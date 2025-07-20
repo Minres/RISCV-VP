@@ -40,10 +40,8 @@
             "request": "launch",
             "name": "VP-Debug",
             "cwd": "${workspaceRoot}",
-            "valuesFormatting": "parseText",
-            "target": "./build/src/tgc-vp",
-            "printCalls": false,
-            "arguments": "-f fw/hello-world/hello"
+            "program": "${workspaceFolder}/out/build/Debug/src/riscv-vp",
+            "arguments": "--isa ? -f fw/hello-world/hello"
         },
     ],
     "compounds": [

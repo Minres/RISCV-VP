@@ -19,10 +19,10 @@
     <booleanAttribute key="org.eclipse.cdt.launch.DEBUGGER_STOP_AT_MAIN" value="false"/>
     <stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_STOP_AT_MAIN_SYMBOL" value="sc_main"/>
     <stringAttribute key="org.eclipse.cdt.launch.PROGRAM_ARGUMENTS" value="-f ${project_loc:dhrystone}/dhrystone&#10;-p ce=tgc-iss/dbt-rise-tgc/contrib/instr/TGC5C_slow.yaml&#10;--backend=interp&#10;--disass -v INFO"/>
-    <stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="build/${config_name:TGC-VP}/src/tgc-vp"/>
+    <stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="build/${config_name:RISCV-VP}/src/riscv-vp"/>
     <stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value="RISCV-VP"/>
     <booleanAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_AUTO_ATTR" value="true"/>
-    <stringAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_ID_ATTR" value=""/>
+    <stringAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_ID_ATTR" value="cdt.managedbuild.toolchain.gnu.base.1730410661.719145049"/>
     <booleanAttribute key="org.eclipse.debug.core.ATTR_FORCE_SYSTEM_CONSOLE_ENCODING" value="false"/>
     <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
         <listEntry value="/RISCV-VP"/>

@@ -21,3 +21,5 @@ CMakeSettings.json
 /.direnv
 /.cache
 /CMakeUserPresets.json
+/.envrc.*
+.clangd
