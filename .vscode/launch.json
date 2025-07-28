@@ -42,7 +42,7 @@
             "name": "Launch VP",
             "cwd": "${workspaceRoot}",
             "program": "${workspaceFolder}/build/Debug/src/riscv-vp",
-            "arguments": "--isa tgc5c -f fw/hello-world/hello",
+            "arguments": "-v TRACEALL --isa tgc5c -f fw/hello-world/hello",
             "openGdbConsole": true
         },
     ],
