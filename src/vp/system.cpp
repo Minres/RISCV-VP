@@ -23,11 +23,11 @@ system::system(sc_core::sc_module_name nm)
     core_complex.dbus(ahb_router.target[1]);
 
     ahb_router.initiator.at(0)(qspi.xip_sck);
-    ahb_router.set_target_range(0, 0xE0000000, 16_MB);
+    ahb_router.set_target_range(0, 0x20000000, 16_MB);
     ahb_router.initiator.at(1)(mem_ram.target);
-    ahb_router.set_target_range(1, 0xC0000000, 128_kB);
+    ahb_router.set_target_range(1, 0x00000000, 128_kB);
     ahb_router.initiator.at(2)(apbBridge.target[0]);
-    ahb_router.set_target_range(2, 0xF0000000, 256_MB);
+    ahb_router.set_target_range(2, 0x10000000, 256_MB);
 
     size_t i = 0;
     for(const auto& e : PipelinedMemoryBusToApbBridge_map) {
