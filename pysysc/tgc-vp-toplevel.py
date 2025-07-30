@@ -33,17 +33,18 @@ pysysc.load_systemc()
 ###############################################################################
 scc.load_lib(project_dir)
 ###############################################################################
-logging.debug("Loading TGC-VP Peripherals libs")
+logging.debug("Loading RISCV-VP Peripherals libs")
 pysysc.add_include_path(os.path.join(project_dir, 'vpvper'))
 pysysc.add_library('sifive.h', 'libvpvper_sifive.so', project_dir)
+pysysc.add_library('sifive.h', 'libvpvper_minres.so', project_dir)
 ###############################################################################
 logging.debug("Loading TGC-ISS")
-pysysc.add_include_path(os.path.join(project_dir, 'tgc-iss/dbt-rise-tgc/incl/sysc'))
-pysysc.add_library('core_complex.h', 'libdbt-rise-tgc_sc.so', project_dir)
+pysysc.add_include_path(os.path.join(project_dir, 'iss/dbt-rise-riscv/incl/sysc'))
+pysysc.add_library('core_complex.h', 'libdbt-rise-riscv.so', project_dir)
 ###############################################################################
 # Include section
 ###############################################################################
-cppyy.include(os.path.join(project_dir, 'src/tgfs_vp/rst_gen.h'))
+cppyy.include(os.path.join(project_dir, 'src/vp/rst_gen.h'))
 ###############################################################################
 # configure
 ###############################################################################
