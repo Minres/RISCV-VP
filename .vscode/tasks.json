@@ -4,7 +4,7 @@
 		{
 			"label": "CMake-and-make",
 			"type": "shell",
-			"command": "source .venv/bin/activate && cmake -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCMAKE_EXPORT_COMPILE_COMMANDS=ON && cmake --build build",
+			"command": "cmake --preset Release -B build/Release  && cmake --build build/Release",
 			"problemMatcher": [],
 			"presentation": {
 				"echo": true,
@@ -22,7 +22,7 @@
 		{
 			"label": "Build-FW",
 			"type": "shell",
-			"command": "cd fw/hello-world/ && make",
+			"command": "make -C fw/hello-world clean all",
 			"problemMatcher": [],
 			"presentation": {
 				"echo": true,
@@ -36,7 +36,7 @@
 		{
 			"label": "Execute-VP",
 			"type": "shell",
-			"command": "build/src/tgc-vp -f fw/hello-world/hello -p pctrace=contrib/TGC_C_cycles.json",
+			"command": "build/Debug/src/riscv-vp -f fw/hello-world/hello.elf -p pctrace=contrib/TGC_C_cycles.json",
 			"problemMatcher": [],
 			"presentation": {
 				"echo": true,
@@ -50,7 +50,7 @@
 		{
 			"label": "VP-GDB-Server",
 			"type": "shell",
-			"command": "build/src/tgc-vp -f fw/hello-world/hello -g 10000",
+			"command": "build/Debug/src/riscv-vp -v TRACEALL --disass -f fw/hello-world/hello.elf -g 10000",
 			"problemMatcher": [],
 			"presentation": {
 				"echo": true,
