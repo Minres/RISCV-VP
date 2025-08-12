@@ -19,6 +19,8 @@ system::system(sc_core::sc_module_name nm)
 : sc_core::sc_module(nm)
 , NAMED(ahb_router, 3, 2)
 , NAMED(apbBridge, PipelinedMemoryBusToApbBridge_map.size(), 1) {
+    mtime_clk = (1.0 / 32768) * 1_sec;
+
     core_complex.ibus(ahb_router.target[0]);
     core_complex.dbus(ahb_router.target[1]);
 
@@ -53,6 +55,7 @@ system::system(sc_core::sc_module_name nm)
     qspi.rst_i(rst_s);
     core_complex.rst_i(rst_s);
 
+    aclint.mtime_clk_i(mtime_clk);
     aclint.mtime_o(mtime_s);
     aclint.mtime_int_o(mtime_int_s);
     aclint.msip_int_o(msip_int_s);

@@ -60,6 +60,7 @@ private:
     scc::memory<128_kB, scc::LT> mem_ram{"mem_ram"};
     scc::memory<8_kB, scc::LT> boot_rom{"boot_rom"};
 
+    sc_core::sc_signal<sc_core::sc_time> mtime_clk{"mtime_clk"};
     sc_core::sc_signal<bool, sc_core::SC_MANY_WRITERS> rst_s{"rst_s"}, mtime_int_s{"mtime_int_s"}, msip_int_s{"msip_int_s"};
 
     sc_core::sc_vector<sc_core::sc_signal<bool, sc_core::SC_MANY_WRITERS>> irq_int_s{"irq_int_s", 32}, local_int_s{"local_int_s", 16};
