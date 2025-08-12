@@ -53,6 +53,7 @@ system::system(sc_core::sc_module_name nm)
     qspi.rst_i(rst_s);
     core_complex.rst_i(rst_s);
 
+    aclint.mtime_o(mtime_s);
     aclint.mtime_int_o(mtime_int_s);
     aclint.msip_int_o(msip_int_s);
     irq_ctrl.irq_o(core_int_s);
@@ -63,6 +64,7 @@ system::system(sc_core::sc_module_name nm)
     timer0.interrupt_o[1](irq_int_s[2]);
     qspi.irq_o(irq_int_s[3]);
 
+    core_complex.mtime_i(mtime_s);
     core_complex.timer_irq_i(mtime_int_s);
     core_complex.ext_irq_i(core_int_s);
     core_complex.local_irq_i(local_int_s);

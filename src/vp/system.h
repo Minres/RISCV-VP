@@ -18,6 +18,7 @@
 #include <scc/router.h>
 #include <scc/utilities.h>
 #include <sysc/communication/sc_clock.h>
+#include <sysc/communication/sc_signal.h>
 #include <sysc/communication/sc_signal_ports.h>
 #include <sysc/core_complex.h>
 #include <sysc/kernel/sc_module.h>
@@ -59,13 +60,11 @@ private:
     scc::memory<128_kB, scc::LT> mem_ram{"mem_ram"};
     scc::memory<8_kB, scc::LT> boot_rom{"boot_rom"};
 
-    sc_core::sc_signal<bool, sc_core::SC_MANY_WRITERS> rst_s{"rst_s"}, mtime_int_s{"mtime_int_s"},
-        msip_int_s{"msip_int_s"};
+    sc_core::sc_signal<bool, sc_core::SC_MANY_WRITERS> rst_s{"rst_s"}, mtime_int_s{"mtime_int_s"}, msip_int_s{"msip_int_s"};
 
-    sc_core::sc_vector<sc_core::sc_signal<bool, sc_core::SC_MANY_WRITERS>> irq_int_s{"irq_int_s", 32},
-        local_int_s{"local_int_s", 16};
+    sc_core::sc_vector<sc_core::sc_signal<bool, sc_core::SC_MANY_WRITERS>> irq_int_s{"irq_int_s", 32}, local_int_s{"local_int_s", 16};
     sc_core::sc_signal<bool, sc_core::SC_MANY_WRITERS> core_int_s{"core_int_s"};
-
+    sc_core::sc_signal<uint64_t> mtime_s{"mtime_s"};
     void gen_reset();
 #include "../vp/gen/PipelinedMemoryBusToApbBridge.h" // IWYU pragma: keep
 };
