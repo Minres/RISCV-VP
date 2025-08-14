@@ -8,6 +8,8 @@ BOARD=riscv_vp
 LINK_TARGET=flash
 RISCV_ARCH:=rv32imc
 RISCV_ABI:=ilp32
+#RISCV_ARCH:=rv64imc
+#RISCV_ABI:=lp64
 LDFLAGS := -g -march=$(RISCV_ARCH) -mabi=$(RISCV_ABI)
 
 compiler := $(shell which riscv64-unknown-elf-gcc)
