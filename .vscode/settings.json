@@ -14,6 +14,10 @@
         "--background-index",
         "--compile-commands-dir=${workspaceFolder}/build"
     ],
-    "cmake.copyCompileCommands": "${workspaceFolder}/build/compile_commands.json"
-
+    "cmake.copyCompileCommands": "${workspaceFolder}/build/compile_commands.json",
+    "cmake.options.statusBarVisibility": "hidden",
+    "cmake.options.advanced": {
+        "configure": {"projectStatusVisibility": "visible"},
+        "build": {"statusBarVisibility": "visible"}
+    }
 }

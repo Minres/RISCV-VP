@@ -1,13 +1,10 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
             "type": "gdbtarget",
             "request": "attach",
-            "name": "Attach-to-gdbserver",
+            "name": "Attach GDB to VP",
             "program": "./fw/hello-world/hello.elf",
             "imageAndSymbols": {
                 "symbolFileName": "./fw/hello-world/hello.elf"
@@ -27,25 +24,25 @@
         {
             "type": "gdb",
             "request": "launch",
-            "name": "Launch VP with gdbserver",
+            "name": "32bit VP with gdbserver",
             "cwd": "${workspaceRoot}",
             "program": "${workspaceFolder}/build/Debug/src/riscv-vp",
-            "arguments": "--isa 'rv32gc|msu_vp' -v DEBUG --disass -f fw/hello-world/hello.elf -g 10000",
+            "arguments": "--isa 'rv32gc|msu_vp' -v INFO --disass -f fw/hello-world/hello.elf -g 10000",
             "openGdbConsole": true
         },
         {
             "type": "gdb",
             "request": "launch",
-            "name": "Launch 64bit VP with gdbserver",
+            "name": "64bit VP with gdbserver",
             "cwd": "${workspaceRoot}",
             "program": "${workspaceFolder}/build/Debug/src/riscv-vp",
-            "arguments": "--isa 'rv64gc|msu_vp' -v TRACEALL --disass -f fw/hello-world/hello.elf -g 10000",
+            "arguments": "--isa 'rv64gc|msu_vp' -v INFO --disass -f fw/hello-world/hello.elf -g 10000",
             "openGdbConsole": true
         },
         {
             "type": "gdb",
             "request": "launch",
-            "name": "Launch VP",
+            "name": "TGC5 VP",
             "cwd": "${workspaceRoot}",
             "program": "${workspaceFolder}/build/Debug/src/riscv-vp",
             "arguments": "-v DEBUG -t 3 --isa 'tgc5c|mu_p' -f fw/hello-world/hello.elf",
@@ -54,17 +51,21 @@
         {
             "type": "gdb",
             "request": "launch",
-            "name": "Launch VP (asmjit)",
+            "name": "TGC5 VP (asmjit)",
             "cwd": "${workspaceRoot}",
             "program": "${workspaceFolder}/build/Debug/src/riscv-vp",
-            "arguments": "--isa tgc5c --backend asmjit -f fw/hello-world/hello.elf",
+            "arguments": "-v DEBUG --isa 'tgc5c|mu_p' --backend asmjit -f fw/hello-world/hello.elf",
             "openGdbConsole": true
         }
     ],
     "compounds": [
         {
-            "name": "FW-Debug",
-            "configurations": ["Launch VP with gdbserver", "Attach-to-gdbserver"]
+            "name": "FW-Debug 32bit",
+            "configurations": ["32bit VP with gdbserver", "Attach to VP"]
+        },
+        {
+            "name": "FW-Debug 64bit",
+            "configurations": ["64bit VP with gdbserver", "Attach to VP"]
         }
     ]
 }
