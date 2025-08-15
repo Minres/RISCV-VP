@@ -32,7 +32,7 @@
 		{
 			"label": "Run 32bit VP",
 			"type": "shell",
-			"command": "build/Debug/src/riscv-vp --isa 'rv32gc|msu_vp' -f fw/hello-world/hello.elf -p pctrace=contrib/TGC_C_cycles.json",
+			"command": "build/Debug/src/riscv-vp --isa 'rv32gc|msu_vp' -f fw/hello-world/hello.elf",
 			"problemMatcher": [],
 			"presentation": {
 				"echo": true,
@@ -46,7 +46,7 @@
 		{
 			"label": "Run 64bit VP",
 			"type": "shell",
-			"command": "build/Debug/src/riscv-vp --isa 'rv64gc|msu_vp' -f fw/hello-world/hello.elf -p pctrace=contrib/TGC_C_cycles.json",
+			"command": "build/Debug/src/riscv-vp --isa 'rv64gc|msu_vp' -f fw/hello-world/hello.elf",
 			"problemMatcher": [],
 			"presentation": {
 				"echo": true,
