@@ -15,6 +15,7 @@ namespace vp {
 using namespace sc_core;
 using namespace vpvper::minres;
 
+SC_HAS_PROCESS(system); // NOLINT
 system::system(sc_core::sc_module_name nm)
 : sc_core::sc_module(nm)
 , NAMED(ahb_router, 3, 2)
@@ -24,17 +25,13 @@ system::system(sc_core::sc_module_name nm)
     core_complex.ibus(ahb_router.target[0]);
     core_complex.dbus(ahb_router.target[1]);
 
-    ahb_router.initiator.at(0)(qspi.xip_sck);
-    ahb_router.set_target_range(0, 0x20000000, 16_MB);
-    ahb_router.initiator.at(1)(mem_ram.target);
-    ahb_router.set_target_range(1, 0x00000000, 128_kB);
-    ahb_router.initiator.at(2)(apbBridge.target[0]);
-    ahb_router.set_target_range(2, 0x10000000, 256_MB);
+    ahb_router.bind_target(qspi.xip_sck, 0, 0x20000000, 16_MB);
+    ahb_router.bind_target(mem_ram.target, 1, 0x00000000, 32_MB);
+    ahb_router.bind_target(apbBridge.target[0], 2, 0x10000000, 256_MB);
 
     size_t i = 0;
     for(const auto& e : PipelinedMemoryBusToApbBridge_map) {
-        apbBridge.initiator.at(i)(e.target);
-        apbBridge.set_target_range(i, e.start, e.size);
+        apbBridge.bind_target(e.target, i, e.start, e.size);
         i++;
     }
 

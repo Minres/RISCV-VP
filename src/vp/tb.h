@@ -20,6 +20,7 @@ public:
     tb(sc_core::sc_module_name const& nm);
     vp::system top{"top"};
     vpvper::generic::rst_gen rst_gen{"rst_gen"};
+    vpvper::generic::terminal term;
     sc_core::sc_signal<bool> rst_n{"rst_n"};
     sc_core::sc_vector<sc_core::sc_signal<bool>> pins_o{"pins_o", 32};
     sc_core::sc_vector<sc_core::sc_signal<bool>> pins_oe_o{"pins_oe_o", 32};

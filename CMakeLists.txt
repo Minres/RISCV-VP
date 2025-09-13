@@ -77,8 +77,6 @@ if(NOT LIBS_ONLY)
 	add_subdirectory(src)
 endif()
 
-find_package(ClangFormat)
-
 if(FW_BUILD)
 	include(FetchContent)
 	set(FETCHCONTENT_BASE_DIR ${CMAKE_CURRENT_BINARY_DIR}/..)

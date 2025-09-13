@@ -2,7 +2,7 @@
     "files.associations": {
         "platform.h": "c"
     },
-    "debug.allowBreakpointsEverywhere": true,
+    "debug.disassemblyView.showSourceCode": true,
     "editor.rulers": [
         {
             "column": 140,
@@ -14,10 +14,15 @@
         "--background-index",
         "--compile-commands-dir=${workspaceFolder}/build"
     ],
+    "cmake.buildDirectory": "${workspaceFolder}/build",
     "cmake.copyCompileCommands": "${workspaceFolder}/build/compile_commands.json",
     "cmake.options.statusBarVisibility": "hidden",
     "cmake.options.advanced": {
         "configure": {"projectStatusVisibility": "visible"},
         "build": {"statusBarVisibility": "visible"}
+    },
+    "todo-tree.ripgrep.ripgrep": "/bin/rg",
+    "files.watcherExclude": {
+        "**/target": true
     }
 }

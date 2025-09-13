@@ -18,5 +18,5 @@ const std::array<scc::target_memory_map_entry<scc::LT>, 7> PipelinedMemoryBusToA
     {aclint.socket, 0x30000, 0xc000},
     {irq_ctrl.socket, 0x40000, 0x8},
     {qspi.socket, 0x50000, 0x5c},
-    {boot_rom.target, 0x80000, 0x2000},
+    {boot_rom.target, 0x80000, 0x100000},
 }};

@@ -56,16 +56,34 @@
             "program": "${workspaceFolder}/build/Debug/src/riscv-vp",
             "arguments": "-v DEBUG --isa 'tgc5c|mu_p' --backend asmjit -f fw/hello-world/hello.elf",
             "openGdbConsole": true
+        },
+        {
+            "type": "gdb",
+            "request": "launch",
+            "name": "64bit VP with Linux",
+            "cwd": "${workspaceRoot}",
+            "program": "${workspaceFolder}/build/Debug/src/riscv-vp",
+            "arguments": "--isa 'rv64gc|msu_vp' -v DEBUG --disass -l run.log -f build/Linux4TGC/opensbi/build/platform/riscv_vp/firmware/fw_payload.elf -m 40ms",
+            "openGdbConsole": true
+        },
+        {
+            "type": "gdb",
+            "request": "launch",
+            "name": "64bit VP with Linux with gdbserver",
+            "cwd": "${workspaceRoot}",
+            "program": "${workspaceFolder}/build/Debug/src/riscv-vp",
+            "arguments": "--isa 'rv64gc|msu_vp' -f build/Linux4TGC/opensbi/build/platform/riscv_vp/firmware/fw_payload.elf -m 40ms -g 10000",
+            "openGdbConsole": true
         }
     ],
     "compounds": [
         {
             "name": "FW-Debug 32bit",
-            "configurations": ["32bit VP with gdbserver", "Attach to VP"]
+            "configurations": ["32bit VP with gdbserver", "Attach GDB to VP"]
         },
         {
             "name": "FW-Debug 64bit",
-            "configurations": ["64bit VP with gdbserver", "Attach to VP"]
+            "configurations": ["64bit VP with gdbserver", "Attach GDB to VP"]
         }
     ]
 }

@@ -30,8 +30,6 @@ namespace vp {
 
 class system : public sc_core::sc_module {
 public:
-    SC_HAS_PROCESS(system); // NOLINT
-
     sc_core::sc_vector<sc_core::sc_out<bool>> pins_o{"pins_o", 32};
     sc_core::sc_vector<sc_core::sc_out<bool>> pins_oe_o{"pins_oe_o", 32};
     sc_core::sc_vector<sc_core::sc_in<bool>> pins_i{"pins_i", 32};
@@ -57,8 +55,8 @@ private:
     vpvper::minres::irq_tl irq_ctrl{"irq_ctrl"};
     vpvper::minres::qspi_tl qspi{"qspi"};
 
-    scc::memory<128_kB, scc::LT> mem_ram{"mem_ram"};
-    scc::memory<8_kB, scc::LT> boot_rom{"boot_rom"};
+    scc::memory<32_MB, scc::LT> mem_ram{"mem_ram"};
+    scc::memory<1_MB, scc::LT> boot_rom{"boot_rom"};
 
     sc_core::sc_signal<sc_core::sc_time> mtime_clk{"mtime_clk"};
     sc_core::sc_signal<bool, sc_core::SC_MANY_WRITERS> rst_s{"rst_s"}, mtime_int_s{"mtime_int_s"}, msip_int_s{"msip_int_s"};

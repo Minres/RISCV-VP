@@ -24,3 +24,6 @@ CMakeSettings.json
 /.envrc.*
 .clangd
 /install
+.gdb_history
+.launch/TGC-VP interp.launch
+.launch/TGC-VP-FW-Debug dhrystone.launch

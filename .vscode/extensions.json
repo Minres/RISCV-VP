@@ -1,10 +1,15 @@
 {
     "recommendations": [
-        "ms-vscode.cpptools-extension-pack",
+        "mkhl.direnv",
+        "sanaajani.taskrunnercode",
+        "ms-vscode.cpptools-themes",
+        "cnshenj.vscode-task-manager",
+        "twxs.cmake",
+        "kylinideteam.cmake-intellisence",
+        "kylinideteam.kylin-cmake-tools",
         "llvm-vs-code-extensions.vscode-clangd",
         "eclipse-cdt.cdt-gdb-vscode",
         "eclipse-cdt.memory-inspector",
-        "eclipse-cdt.peripheral-inspector",
-
+        "eclipse-cdt.peripheral-inspector"
     ]
 }
