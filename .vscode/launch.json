@@ -3,6 +3,29 @@
     "configurations": [
         {
             "type": "gdbtarget",
+            "request": "launch",
+            "name": "Debug hello world 32bit",
+            "program": "fw/hello-world/hello.elf",
+            "imageAndSymbols": {
+                "symbolFileName": "fw/hello-world/hello.elf"
+            },
+            "target": {
+                "server": "${workspaceFolder}/build/RelWithDebInfo/src/riscv-vp",
+                "serverParameters": ["--isa", "rv32gc|msu_vp", "-v", "INFO", "--disass", "-f", "fw/hello-world/hello.elf", "-g", "10000"],
+                "watchServerProcess": true,
+                "port": "10000"
+            },
+            "cwd": "${workspaceRoot}",
+            "gdb": "riscv64-unknown-elf-gdb",
+            "openGdbConsole": true,
+            "presentation": {
+                "hidden": false,
+                "group": "FW Debug",
+                "order": 2
+            },"initCommands": ["b main"]
+        },
+        {
+            "type": "gdbtarget",
             "request": "attach",
             "name": "Attach GDB to VP",
             "program": "./fw/hello-world/hello.elf",
@@ -61,11 +84,11 @@
     "compounds": [
         {
             "name": "FW-Debug 32bit",
-            "configurations": ["32bit VP with gdbserver", "Attach to VP"]
+            "configurations": ["32bit VP with gdbserver", "Attach GDB to VP"]
         },
         {
             "name": "FW-Debug 64bit",
-            "configurations": ["64bit VP with gdbserver", "Attach to VP"]
+            "configurations": ["64bit VP with gdbserver", "Attach GDB to VP"]
         }
     ]
 }
