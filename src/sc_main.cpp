@@ -143,7 +143,7 @@ int sc_main(int argc, char* argv[]) {
             sc_core::sc_start(scc::parse_from_string(parser.get<std::string>("max_time")));
         } else
             sc_core::sc_start();
-        if(!sc_core::sc_end_of_simulation_invoked())
+        if(sc_core::sc_start_of_simulation_invoked() && !sc_core::sc_end_of_simulation_invoked())
             sc_core::sc_stop();
     } catch(sc_core::sc_report& rep) {
         sc_core::sc_report_handler::get_handler()(rep, sc_core::SC_DISPLAY | sc_core::SC_STOP);

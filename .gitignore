@@ -25,3 +25,4 @@ CMakeSettings.json
 .clangd
 /install
 .gdb_history
+/dbt-rise-custom
