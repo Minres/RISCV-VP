@@ -88,6 +88,24 @@
             "program": "${workspaceFolder}/build/Debug/src/riscv-vp",
             "arguments": "-v DEBUG --isa 'tgc5c|mu_p' --backend asmjit -f fw/hello-world/hello.elf",
             "openGdbConsole": true
+        },
+        {
+            "type": "gdb",
+            "request": "launch",
+            "name": "RISCV-VP report ISA",
+            "cwd": "${workspaceRoot}",
+            "program": "${workspaceFolder}/build/Debug/src/riscv-vp",
+            "arguments": "--isa ?",
+            "openGdbConsole": true
+        },
+        {
+            "type": "gdb",
+            "request": "launch",
+            "name": "RISCV-SIM report ISA",
+            "cwd": "${workspaceRoot}",
+            "program": "${workspaceFolder}/build/Debug/dbt-rise-riscv/riscv-sim",
+            "arguments": "--isa ?",
+            "openGdbConsole": true
         }
     ],
     "compounds": [
