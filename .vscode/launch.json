@@ -11,7 +11,7 @@
             },
             "target": {
                 "server": "${workspaceFolder}/build/RelWithDebInfo/src/riscv-vp",
-                "serverParameters": ["--isa", "rv32gc|msu_vp", "-v", "INFO", "--disass", "-f", "fw/hello-world/hello.elf", "-g", "10000"],
+                "serverParameters": ["--isa", "rv32gc_msu", "-v", "INFO", "-f", "fw/hello-world/hello.elf", "-g", "10000"],
                 "watchServerProcess": true,
                 "port": "10000"
             },
@@ -50,7 +50,16 @@
             "name": "32bit VP with gdbserver",
             "cwd": "${workspaceRoot}",
             "program": "${workspaceFolder}/build/Debug/src/riscv-vp",
-            "arguments": "--isa 'rv32gc|msu_vp' -v INFO --disass -f fw/hello-world/hello.elf -g 10000",
+            "arguments": "--isa 'rv32gc_msu' -v INFO --disass -f fw/hello-world/hello.elf -g 10000",
+            "openGdbConsole": true
+        },
+        {
+            "type": "gdb",
+            "request": "launch",
+            "name": "32bit VP",
+            "cwd": "${workspaceRoot}",
+            "program": "${workspaceFolder}/build/Debug/src/riscv-vp",
+            "arguments": "--isa 'rv32gc_msu' -v INFO --disass -f fw/hello-world/hello.elf",
             "openGdbConsole": true
         },
         {
@@ -68,7 +77,7 @@
             "name": "64bit VP with gdbserver",
             "cwd": "${workspaceRoot}",
             "program": "${workspaceFolder}/build/Debug/src/riscv-vp",
-            "arguments": "--isa 'rv64gc|msu_vp' -v INFO --disass -f fw/hello-world/hello.elf -g 10000",
+            "arguments": "--isa 'rv64gc_msu' -v INFO --disass -f fw/hello-world/hello.elf -g 10000",
             "openGdbConsole": true
         },
         {
@@ -77,7 +86,7 @@
             "name": "TGC5 VP",
             "cwd": "${workspaceRoot}",
             "program": "${workspaceFolder}/build/Debug/src/riscv-vp",
-            "arguments": "-v DEBUG -t 3 --isa 'tgc5c|mu_p' -f fw/hello-world/hello.elf",
+            "arguments": "-v DEBUG -t 3 --isa 'tgc5c_mu' -f fw/hello-world/hello.elf",
             "openGdbConsole": true
         },
         {
@@ -86,7 +95,7 @@
             "name": "TGC5 VP (asmjit)",
             "cwd": "${workspaceRoot}",
             "program": "${workspaceFolder}/build/Debug/src/riscv-vp",
-            "arguments": "-v DEBUG --isa 'tgc5c|mu_p' --backend asmjit -f fw/hello-world/hello.elf",
+            "arguments": "-v DEBUG --isa 'tgc5c_mu' --backend asmjit -f fw/hello-world/hello.elf",
             "openGdbConsole": true
         },
         {
