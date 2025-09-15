@@ -2,10 +2,10 @@
 TARGET  = hello
 C_SRCS  = $(wildcard *.c) 
 HEADERS = $(wildcard *.h)
-CFLAGS += -O0 -g 
+CFLAGS += -Og -g 
 
 BOARD=riscv_vp
-LINK_TARGET=flash
+LINK_TARGET=rom
 RISCV_ARCH:=rv32imc
 RISCV_ABI:=ilp32
 #RISCV_ARCH:=rv64imc
