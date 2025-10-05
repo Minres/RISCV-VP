@@ -17,7 +17,7 @@
             },
             "cwd": "${workspaceRoot}",
             "gdb": "riscv64-unknown-elf-gdb",
-            "openGdbConsole": true,
+            "openGdbConsole": false,
             "presentation": {
                 "hidden": false,
                 "group": "FW Debug",
@@ -37,7 +37,7 @@
             },
             "cwd": "${workspaceRoot}",
             "gdb": "riscv64-unknown-elf-gdb",
-            "openGdbConsole": true,
+            "openGdbConsole": false,
             "presentation": {
                 "hidden": false,
                 "group": "FW Debug",
@@ -59,8 +59,7 @@
             "name": "32bit VP",
             "cwd": "${workspaceRoot}",
             "program": "${workspaceFolder}/build/Debug/src/riscv-vp",
-            "arguments": "--isa 'rv32gc_msu' -v INFO --disass -f fw/hello-world/hello.elf",
-            "openGdbConsole": true
+            "arguments": "--isa 'rv32gc_msu' -v INFO --disass -f fw/hello-world/hello.elf"
         },
         {
             "type": "gdb",
