@@ -11,7 +11,16 @@
             },
             "target": {
                 "server": "${workspaceFolder}/build/RelWithDebInfo/src/riscv-vp",
-                "serverParameters": ["--isa", "rv32gc_msu", "-v", "INFO", "-f", "fw/hello-world/hello.elf", "-g", "10000"],
+                "serverParameters": [
+                    "--isa",
+                    "rv32gc_msu",
+                    "-v",
+                    "INFO",
+                    "-f",
+                    "fw/hello-world/hello.elf",
+                    "-g",
+                    "10000"
+                ],
                 "watchServerProcess": true,
                 "port": "10000"
             },
@@ -22,7 +31,45 @@
                 "hidden": false,
                 "group": "FW Debug",
                 "order": 2
-            },"initCommands": ["b main"]
+            },
+            "initCommands": [
+                "b main"
+            ]
+        },
+        {
+            "type": "gdbtarget",
+            "request": "launch",
+            "name": "Debug hello world 32bit",
+            "program": "fw/hello-world/hello.elf",
+            "imageAndSymbols": {
+                "symbolFileName": "fw/hello-world/hello.elf"
+            },
+            "target": {
+                "server": "${workspaceFolder}/build/RelWithDebInfo/src/riscv-vp",
+                "serverParameters": [
+                    "--isa",
+                    "rv32gc_msu",
+                    "-v",
+                    "INFO",
+                    "-f",
+                    "fw/hello-world/hello.elf",
+                    "-g",
+                    "10000"
+                ],
+                "watchServerProcess": true,
+                "port": "10000"
+            },
+            "cwd": "${workspaceRoot}",
+            "gdb": "riscv64-unknown-elf-gdb",
+            "openGdbConsole": false,
+            "presentation": {
+                "hidden": false,
+                "group": "FW Debug",
+                "order": 2
+            },
+            "initCommands": [
+                "b main"
+            ]
         },
         {
             "type": "gdbtarget",
@@ -52,23 +99,6 @@
             "program": "${workspaceFolder}/build/Debug/src/riscv-vp",
             "arguments": "--isa 'rv32gc_msu' -v INFO --disass -f fw/hello-world/hello.elf -g 10000",
             "openGdbConsole": true
-        },
-        {
-            "type": "gdb",
-            "request": "launch",
-            "name": "32bit VP",
-            "cwd": "${workspaceRoot}",
-            "program": "${workspaceFolder}/build/Debug/src/riscv-vp",
-            "arguments": "--isa 'rv32gc_msu' -v INFO --disass -f fw/hello-world/hello.elf"
-        },
-        {
-            "type": "gdb",
-            "request": "launch",
-            "name": "32bit VP",
-            "cwd": "${workspaceRoot}",
-            "program": "${workspaceFolder}/build/Debug/src/riscv-vp",
-            "arguments": "--isa 'rv32gc_msu' -v INFO --disass -f fw/hello-world/hello.elf",
-            "initCommands": ["info break"]
         },
         {
             "type": "gdb",
@@ -119,11 +149,17 @@
     "compounds": [
         {
             "name": "FW-Debug 32bit",
-            "configurations": ["32bit VP with gdbserver", "Attach GDB to VP"]
+            "configurations": [
+                "32bit VP with gdbserver",
+                "Attach GDB to VP"
+            ]
         },
         {
             "name": "FW-Debug 64bit",
-            "configurations": ["64bit VP with gdbserver", "Attach GDB to VP"]
+            "configurations": [
+                "64bit VP with gdbserver",
+                "Attach GDB to VP"
+            ]
         }
     ]
 }
