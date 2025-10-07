@@ -20,7 +20,7 @@
 #include <sysc/communication/sc_clock.h>
 #include <sysc/communication/sc_signal.h>
 #include <sysc/communication/sc_signal_ports.h>
-#include <sysc/core_complex.h>
+#include <sysc/core_complex_mt.h>
 #include <sysc/kernel/sc_module.h>
 #include <sysc/kernel/sc_time.h>
 #include <sysc/utils/sc_vector.h>
@@ -48,7 +48,7 @@ public:
     system(sc_core::sc_module_name nm);
 
 private:
-    sysc::riscv::core_complex<scc::LT, tlm::scc::quantumkeeper_mt> core_complex{"core_complex"};
+    sysc::riscv::core_complex_mt<> core_complex{"core_complex"};
     scc::router<> ahb_router, apbBridge;
     vpvper::minres::gpio_tl gpio0{"gpio0"};
     vpvper::minres::uart_tl uart0{"uart0"};

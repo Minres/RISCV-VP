@@ -33,6 +33,15 @@
         {
             "type": "gdb",
             "request": "launch",
+            "name": "32bit VP",
+            "cwd": "${workspaceRoot}",
+            "program": "${workspaceFolder}/build/Debug/src/riscv-vp",
+            "arguments": "--isa 'rv32gc_msu' -v INFO --disass -f fw/hello-world/hello.elf",
+            "initCommands": ["info break"]
+        },
+        {
+            "type": "gdb",
+            "request": "launch",
             "name": "64bit VP with gdbserver",
             "cwd": "${workspaceRoot}",
             "program": "${workspaceFolder}/build/Debug/src/riscv-vp",
