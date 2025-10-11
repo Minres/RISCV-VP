@@ -37,7 +37,7 @@
             "cwd": "${workspaceRoot}",
             "program": "${workspaceFolder}/build/Debug/src/riscv-vp",
             "arguments": "--isa 'rv32gc_msu' -v INFO --disass -f fw/hello-world/hello.elf",
-            "initCommands": ["info break"]
+            "openGdbConsole": true
         },
         {
             "type": "gdb",

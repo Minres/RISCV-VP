@@ -9,6 +9,7 @@
             "comment": "clang-format"
         }
     ],
+    "editor.formatOnSave": true,
     "clangd.arguments": [
         "--pretty",
         "--background-index",
