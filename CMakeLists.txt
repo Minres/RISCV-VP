@@ -83,7 +83,7 @@ if(ENABLE_CLANGFORMAT)
 	find_package(ClangFormat)
 endif()
 
-if(FW_BUILD)
+if(ENABLE_FW_BUILD)
 	include(FetchContent)
 	set(FETCHCONTENT_BASE_DIR ${CMAKE_CURRENT_BINARY_DIR}/..)
 	FetchContent_Declare(
