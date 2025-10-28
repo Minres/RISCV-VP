@@ -33,7 +33,7 @@ class Pkg(ConanFile):
         "boost/*:without_timer": "True",
         "boost/*:without_type_erasure": "True",
         "boost/*:without_wave": "True",
-        "systemc/*:shared": "True",
+        "systemc/*:shared": "False",
     }
 
     def requirements(self):
