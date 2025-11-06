@@ -2,6 +2,14 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "gdb",
+            "request": "launch",
+            "name": "riscv-sim hello.elf",
+            "program": "${workspaceFolder}/build/Debug/dbt-rise-riscv/riscv-sim",
+            "arguments": "-f dbt-rise-riscv/contrib/fw/hello-world/hello.elf",
+            "cwd": "${workspaceFolder}"
+        },
+        {
             "type": "gdbtarget",
             "request": "launch",
             "name": "Debug hello world 32bit",
@@ -11,7 +19,16 @@
             },
             "target": {
                 "server": "${workspaceFolder}/build/RelWithDebInfo/src/riscv-vp",
-                "serverParameters": ["--isa", "rv32gc_msu", "-v", "INFO", "-f", "fw/hello-world/hello.elf", "-g", "10000"],
+                "serverParameters": [
+                    "--isa",
+                    "rv32gc_msu",
+                    "-v",
+                    "INFO",
+                    "-f",
+                    "fw/hello-world/hello.elf",
+                    "-g",
+                    "10000"
+                ],
                 "watchServerProcess": true,
                 "port": "10000"
             },
@@ -22,7 +39,10 @@
                 "hidden": false,
                 "group": "FW Debug",
                 "order": 2
-            },"initCommands": ["b main"]
+            },
+            "initCommands": [
+                "b main"
+            ]
         },
         {
             "type": "gdbtarget",
@@ -110,11 +130,17 @@
     "compounds": [
         {
             "name": "FW-Debug 32bit",
-            "configurations": ["32bit VP with gdbserver", "Attach GDB to VP"]
+            "configurations": [
+                "32bit VP with gdbserver",
+                "Attach GDB to VP"
+            ]
         },
         {
             "name": "FW-Debug 64bit",
-            "configurations": ["64bit VP with gdbserver", "Attach GDB to VP"]
+            "configurations": [
+                "64bit VP with gdbserver",
+                "Attach GDB to VP"
+            ]
         }
     ]
 }
