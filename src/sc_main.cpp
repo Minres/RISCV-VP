@@ -20,9 +20,10 @@
 
 #include "vp/tb.h"
 #include <boost/program_options.hpp>
+#include <csetjmp>
+#include <csignal>
 #include <fstream>
 #include <iostream>
-#include <sstream>
 #ifdef ERROR
 #undef ERROR
 #endif
@@ -31,14 +32,20 @@ const std::string core_path{"tb.top.core_complex"};
 
 using namespace sysc;
 using namespace sc_core;
-namespace po = boost::program_options;
 
 namespace {
 const size_t ERRORR_IN_COMMAND_LINE = 1;
 const size_t SUCCESS = 0;
 } // namespace
 
+jmp_buf abrt;
+void ABRThandler(int sig) { longjmp(abrt, sig); }
+
 int sc_main(int argc, char* argv[]) {
+    signal(SIGINT, ABRThandler);
+    signal(SIGABRT, ABRThandler);
+    signal(SIGSEGV, ABRThandler);
+    signal(SIGTERM, ABRThandler);
     ///////////////////////////////////////////////////////////////////////////
     // SystemC >=2.2 got picky about multiple drivers so disable check
     ///////////////////////////////////////////////////////////////////////////
@@ -73,8 +80,7 @@ int sc_main(int argc, char* argv[]) {
     if(auto trace_level = parser.get<unsigned>("trace-level")) {
         auto file_name = parser.get<std::string>("trace-file");
         auto trace_default_on = parser.is_set("trace-default-on");
-        if(parser.is_set("trace-default-off"))
-            cfg.set_value("scc_tracer.default_trace_enable", false);
+        cfg.set_value("scc_tracer.default_trace_enable", !parser.is_set("trace-default-off"));
         cfg.set_value("scc_tracer.tx_trace_type", static_cast<unsigned>(scc::tracer::file_type::FTR));
         cfg.set_value("scc_tracer.sig_trace_type", static_cast<unsigned>(scc::tracer::file_type::FST));
         tracer = scc::make_unique<scc::configurable_tracer>(file_name, static_cast<bool>(trace_level & 0x2),
@@ -90,7 +96,7 @@ int sc_main(int argc, char* argv[]) {
     if(tracer)
         tracer->add_control();
     ///////////////////////////////////////////////////////////////////////////
-    // dump configuration if requested
+    // dump configuration if requested and/or structure
     ///////////////////////////////////////////////////////////////////////////
     if(parser.get<std::string>("dump-config").size() > 0) {
         std::ofstream of{parser.get<std::string>("dump-config")};
@@ -133,15 +139,19 @@ int sc_main(int argc, char* argv[]) {
     ///////////////////////////////////////////////////////////////////////////
     // run simulation
     ///////////////////////////////////////////////////////////////////////////
-    try {
-        if(parser.is_set("max_time")) {
-            sc_core::sc_start(scc::parse_from_string(parser.get<std::string>("max_time")));
-        } else
-            sc_core::sc_start();
-        if(sc_core::sc_start_of_simulation_invoked() && !sc_core::sc_end_of_simulation_invoked())
-            sc_core::sc_stop();
-    } catch(sc_core::sc_report& rep) {
-        sc_core::sc_report_handler::get_handler()(rep, sc_core::SC_DISPLAY | sc_core::SC_STOP);
+    if(auto res = setjmp(abrt)) {
+        SCCERR() << "Simulation aborted with signal " << res << "!";
+    } else {
+        try {
+            if(parser.is_set("max_time")) {
+                sc_core::sc_start(scc::parse_from_string(parser.get<std::string>("max_time")));
+            } else
+                sc_core::sc_start();
+            if(sc_core::sc_start_of_simulation_invoked() && !sc_core::sc_end_of_simulation_invoked())
+                sc_core::sc_stop();
+        } catch(sc_core::sc_report& rep) {
+            sc_core::sc_report_handler::get_handler()(rep, sc_core::SC_DISPLAY | sc_core::SC_STOP);
+        }
     }
     return 0;
 }
