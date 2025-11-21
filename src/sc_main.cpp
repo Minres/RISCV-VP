@@ -72,14 +72,13 @@ int sc_main(int argc, char* argv[]) {
     std::unique_ptr<scc::configurable_tracer> tracer;
     if(auto trace_level = parser.get<unsigned>("trace-level")) {
         auto file_name = parser.get<std::string>("trace-file");
-        auto enable_sig_trace = (trace_level & 0x1) != 0;                           // bit0 enables sig trace
-        auto tx_trace_type = static_cast<scc::tracer::file_type>(trace_level >> 1); // bit3-bit1 define the kind of transaction trace
         auto trace_default_on = parser.is_set("trace-default-on");
         if(parser.is_set("trace-default-off"))
             cfg.set_value("scc_tracer.default_trace_enable", false);
         cfg.set_value("scc_tracer.tx_trace_type", static_cast<unsigned>(scc::tracer::file_type::FTR));
         cfg.set_value("scc_tracer.sig_trace_type", static_cast<unsigned>(scc::tracer::file_type::FST));
-        tracer = scc::make_unique<scc::configurable_tracer>(file_name, tx_trace_type, enable_sig_trace);
+        tracer = scc::make_unique<scc::configurable_tracer>(file_name, static_cast<bool>(trace_level & 0x2),
+                                                            static_cast<bool>(trace_level & 0x1));
     }
     ///////////////////////////////////////////////////////////////////////////
     // instantiate top level
