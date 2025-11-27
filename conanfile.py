@@ -12,6 +12,7 @@ class Pkg(ConanFile):
     )
     default_options = {
         "llvm-core/*:targets": "X86",
+        "llvm-core/*:components": "Native",
         "boost/*:fPIC": "True",
         "boost/*:header_only": "False",
         "boost/*:without_contract": "True",
@@ -46,7 +47,7 @@ class Pkg(ConanFile):
         self.requires("lz4/1.9.3")
         self.requires("yaml-cpp/0.8.0")
         self.requires("jsoncpp/1.9.5")
-        self.requires("zlib/1.2.12")
+        self.requires("zlib/1.3.1")
         self.requires("asmjit/cci.20240531")
         if "WITH_LLVM" in os.environ:
             self.requires("llvm-core/19.1.7")

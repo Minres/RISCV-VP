@@ -40,11 +40,10 @@ CLIParser::CLIParser(int argc, char* argv[])
     }
     auto log_level = vm_["verbose"].as<scc::log>();
     auto log_level_num = static_cast<unsigned>(log_level);
-    LOGGER(DEFAULT)::reporting_level() = logging::as_log_level(log_level_num > 6 ? 6 : log_level_num);
-    LOGGER(connection)::reporting_level() =
-        logging::as_log_level(log_level_num > 4 ? log_level_num - 1 : log_level_num);
-    LOGGER(dbt_rise_iss)::reporting_level() =
-        logging::as_log_level(log_level_num > 4 ? log_level_num - 1 : log_level_num);
+    auto level = logging::as_log_level(log_level_num > 6 ? 6 : log_level_num);
+    LOGGER(DEFAULT)::set_reporting_level(level);
+    LOGGER(connection)::set_reporting_level(level);
+    LOGGER(dbt_rise_iss)::set_reporting_level(level);
     ///////////////////////////////////////////////////////////////////////////
     // configure logging
     ///////////////////////////////////////////////////////////////////////////
@@ -57,8 +56,8 @@ CLIParser::CLIParser(int argc, char* argv[])
     scc::stream_redirection cerr_redir(std::cerr, scc::log::ERROR);
     sc_core::sc_report_handler::set_actions("/IEEE_Std_1666/deprecated", sc_core::SC_DO_NOTHING);
     sc_core::sc_report_handler::set_actions(sc_core::SC_ID_MORE_THAN_ONE_SIGNAL_DRIVER_, sc_core::SC_DO_NOTHING);
-    sc_core::sc_report_handler::set_actions(sc_core::SC_ERROR, sc_core::SC_LOG | sc_core::SC_CACHE_REPORT |
-                                                                   sc_core::SC_DISPLAY | sc_core::SC_STOP);
+    sc_core::sc_report_handler::set_actions(sc_core::SC_ERROR,
+                                            sc_core::SC_LOG | sc_core::SC_CACHE_REPORT | sc_core::SC_DISPLAY | sc_core::SC_STOP);
 }
 
 void CLIParser::build() {
@@ -88,7 +87,7 @@ void CLIParser::build() {
                     "dump the intermediate representation")
 			("dump-structure", po::value<std::string>(),
 					"dump model structure to ELK file")
-            ("quantum", po::value<unsigned>(),
+            ("quantum", po::value<unsigned>()->default_value(100),
                     "SystemC quantum time in ns")
             ("reset,r", po::value<std::string>(),
                     "reset address")

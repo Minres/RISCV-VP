@@ -72,9 +72,8 @@ int sc_main(int argc, char* argv[]) {
     std::unique_ptr<scc::configurable_tracer> tracer;
     if(auto trace_level = parser.get<unsigned>("trace-level")) {
         auto file_name = parser.get<std::string>("trace-file");
-        auto enable_sig_trace = (trace_level & 0x1) != 0; // bit0 enables sig trace
-        auto tx_trace_type =
-            static_cast<scc::tracer::file_type>(trace_level >> 1); // bit3-bit1 define the kind of transaction trace
+        auto enable_sig_trace = (trace_level & 0x1) != 0;                           // bit0 enables sig trace
+        auto tx_trace_type = static_cast<scc::tracer::file_type>(trace_level >> 1); // bit3-bit1 define the kind of transaction trace
         auto trace_default_on = parser.is_set("trace-default-on");
         if(parser.is_set("trace-default-off"))
             cfg.set_value("scc_tracer.default_trace_enable", false);
@@ -102,8 +101,7 @@ int sc_main(int argc, char* argv[]) {
     cfg.configure();
     std::unique_ptr<scc::hierarchy_dumper> dumper;
     if(parser.is_set("dump-structure"))
-        dumper.reset(
-            new scc::hierarchy_dumper(parser.get<std::string>("dump-structure"), scc::hierarchy_dumper::D3JSON));
+        dumper.reset(new scc::hierarchy_dumper(parser.get<std::string>("dump-structure"), scc::hierarchy_dumper::D3JSON));
     ///////////////////////////////////////////////////////////////////////////
     // overwrite config with command line settings
     ///////////////////////////////////////////////////////////////////////////
@@ -121,13 +119,12 @@ int sc_main(int argc, char* argv[]) {
         tlm::tlm_global_quantum::instance().set(sc_core::sc_time(parser.get<unsigned>("quantum"), sc_core::SC_NS));
     if(parser.is_set("reset")) {
         auto str = parser.get<std::string>("reset");
-        uint64_t start_address =
-            str.find("0x") == 0 ? std::stoull(str.substr(2), nullptr, 16) : std::stoull(str, nullptr, 10);
+        uint64_t start_address = str.find("0x") == 0 ? std::stoull(str.substr(2), nullptr, 16) : std::stoull(str, nullptr, 10);
         cfg.set_value(core_path + ".reset_address", start_address);
     }
     if(parser.is_set("disass")) {
         cfg.set_value(core_path + ".enable_disass", true);
-        LOGGER(disass)::reporting_level() = logging::INFO;
+        LOGGER(disass)::set_reporting_level(logging::INFO);
         auto file_name = parser.get<std::string>("disass");
         if(file_name.length() > 0) {
             LOG_OUTPUT(disass)::stream() = fopen(file_name.c_str(), "w");
