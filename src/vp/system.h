@@ -7,6 +7,7 @@
 #ifndef SRC_VP_SYSTEM_H_
 #define SRC_VP_SYSTEM_H_
 
+#include "tlm/scc/quantum_keeper.h"
 #include <cci_configuration>
 #include <minres/aclint.h>
 #include <minres/gpio.h>
@@ -48,7 +49,8 @@ public:
     system(sc_core::sc_module_name nm);
 
 private:
-    sysc::riscv::core_complex<> core_complex{"core_complex"};
+#include "../vp/gen/PipelinedMemoryBusToApbBridge.h" // IWYU pragma: keep
+    sysc::riscv::core_complex<scc::LT, tlm::scc::quantumkeeper_mt> core_complex{"core_complex"};
     scc::router<> ahb_router, apbBridge;
     vpvper::minres::gpio_tl gpio0{"gpio0"};
     vpvper::minres::uart_tl uart0{"uart0"};
@@ -67,7 +69,6 @@ private:
     sc_core::sc_signal<bool, sc_core::SC_MANY_WRITERS> core_int_s{"core_int_s"};
     sc_core::sc_signal<uint64_t> mtime_s{"mtime_s"};
     void gen_reset();
-#include "../vp/gen/PipelinedMemoryBusToApbBridge.h" // IWYU pragma: keep
 };
 
 } // namespace vp

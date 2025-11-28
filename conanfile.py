@@ -12,6 +12,7 @@ class Pkg(ConanFile):
     )
     default_options = {
         "llvm-core/*:targets": "X86",
+        "llvm-core/*:components": "Native",
         "boost/*:fPIC": "True",
         "boost/*:header_only": "False",
         "boost/*:without_contract": "True",

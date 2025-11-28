@@ -46,6 +46,41 @@
         },
         {
             "type": "gdbtarget",
+            "request": "launch",
+            "name": "Debug hello world 32bit",
+            "program": "fw/hello-world/hello.elf",
+            "imageAndSymbols": {
+                "symbolFileName": "fw/hello-world/hello.elf"
+            },
+            "target": {
+                "server": "${workspaceFolder}/build/RelWithDebInfo/src/riscv-vp",
+                "serverParameters": [
+                    "--isa",
+                    "rv32gc_msu",
+                    "-v",
+                    "INFO",
+                    "-f",
+                    "fw/hello-world/hello.elf",
+                    "-g",
+                    "10000"
+                ],
+                "watchServerProcess": true,
+                "port": "10000"
+            },
+            "cwd": "${workspaceRoot}",
+            "gdb": "riscv64-unknown-elf-gdb",
+            "openGdbConsole": false,
+            "presentation": {
+                "hidden": false,
+                "group": "FW Debug",
+                "order": 2
+            },
+            "initCommands": [
+                "b main"
+            ]
+        },
+        {
+            "type": "gdbtarget",
             "request": "attach",
             "name": "Attach GDB to VP",
             "program": "./fw/hello-world/hello.elf",
@@ -79,7 +114,15 @@
             "name": "32bit VP",
             "cwd": "${workspaceRoot}",
             "program": "${workspaceFolder}/build/Debug/src/riscv-vp",
-            "arguments": "--isa 'rv32gc_msu' -v INFO --disass -f fw/hello-world/hello.elf"
+            "arguments": "--isa 'rv32gc_msu' -v INFO -f fw/hello-world/hello.elf",
+            "openGdbConsole": true,
+            "initCommands": [
+                "set breakpoint pending on",
+                "set breakpoint auto-hw on",
+                "set breakpoint always-inserted on",
+                "set output-radix 16"
+            ],
+            "verbose": false
         },
         {
             "type": "gdb",

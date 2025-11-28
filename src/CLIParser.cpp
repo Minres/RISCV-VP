@@ -40,9 +40,10 @@ CLIParser::CLIParser(int argc, char* argv[])
     }
     auto log_level = vm_["verbose"].as<scc::log>();
     auto log_level_num = static_cast<unsigned>(log_level);
-    LOGGER(DEFAULT)::set_reporting_level(logging::as_log_level(log_level_num > 6 ? 6 : log_level_num));
-    LOGGER(connection)::set_reporting_level(logging::as_log_level(log_level_num > 4 ? log_level_num - 1 : log_level_num));
-    LOGGER(dbt_rise_iss)::set_reporting_level(logging::as_log_level(log_level_num > 4 ? log_level_num - 1 : log_level_num));
+    auto level = logging::as_log_level(log_level_num > 6 ? 6 : log_level_num);
+    LOGGER(DEFAULT)::set_reporting_level(level);
+    LOGGER(connection)::set_reporting_level(level);
+    LOGGER(dbt_rise_iss)::set_reporting_level(level);
     ///////////////////////////////////////////////////////////////////////////
     // configure logging
     ///////////////////////////////////////////////////////////////////////////
@@ -86,7 +87,7 @@ void CLIParser::build() {
                     "dump the intermediate representation")
 			("dump-structure", po::value<std::string>(),
 					"dump model structure to ELK file")
-            ("quantum", po::value<unsigned>(),
+            ("quantum", po::value<unsigned>()->default_value(100),
                     "SystemC quantum time in ns")
             ("reset,r", po::value<std::string>(),
                     "reset address")

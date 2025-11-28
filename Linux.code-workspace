@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "build/Linux4TGC/buildroot"
+		},
+		{
+			"path": "build/Linux4TGC/opensbi"
+		},
+		{
+			"path": "build/Linux4TGC/linux"
+		}
+	]
+}
