@@ -50,7 +50,7 @@ public:
 
 private:
 #include "../vp/gen/PipelinedMemoryBusToApbBridge.h" // IWYU pragma: keep
-    sysc::riscv::core_complex<scc::LT, tlm::scc::quantumkeeper_mt> core_complex{"core_complex"};
+    sysc::riscv::core_complex<> core_complex{"core_complex"};
     scc::router<> ahb_router, apbBridge;
     vpvper::minres::gpio_tl gpio0{"gpio0"};
     vpvper::minres::uart_tl uart0{"uart0"};
