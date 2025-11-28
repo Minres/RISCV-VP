@@ -73,18 +73,30 @@ int sc_main(int argc, char* argv[]) {
     ///////////////////////////////////////////////////////////////////////////
     scc::configurer cfg(parser.get<std::string>("config-file"));
     ///////////////////////////////////////////////////////////////////////////
+    // process CLI paramter settings
+    ///////////////////////////////////////////////////////////////////////////
+    if(parser.is_set("parameter"))
+        for(auto& p : parser.get<std::vector<std::string>>("parameter")) {
+            auto token = util::split(p, '=');
+            if(token.size() == 2)
+                cfg.set_value_from_str(token[0], token[1]);
+            else
+                SCCERR() << "Invalid parameter specification '" << p << "', should be '<param name>=<param_value>'";
+        }
+    ///////////////////////////////////////////////////////////////////////////
     // set up tracing & transaction recording
     ///////////////////////////////////////////////////////////////////////////
-
     std::unique_ptr<scc::configurable_tracer> tracer;
     if(auto trace_level = parser.get<unsigned>("trace-level")) {
         auto file_name = parser.get<std::string>("trace-file");
         auto trace_default_on = parser.is_set("trace-default-on");
+        auto enable_tx_trace = static_cast<bool>(trace_level & 0x2);
         cfg.set_value("scc_tracer.default_trace_enable", !parser.is_set("trace-default-off"));
         cfg.set_value("scc_tracer.tx_trace_type", static_cast<unsigned>(scc::tracer::file_type::FTR));
         cfg.set_value("scc_tracer.sig_trace_type", static_cast<unsigned>(scc::tracer::file_type::FST));
-        tracer = scc::make_unique<scc::configurable_tracer>(file_name, static_cast<bool>(trace_level & 0x2),
-                                                            static_cast<bool>(trace_level & 0x1));
+        tracer = scc::make_unique<scc::configurable_tracer>(file_name, enable_tx_trace, static_cast<bool>(trace_level & 0x1));
+        if(enable_tx_trace)
+            cfg.set_value(core_path + ".enable_instr_trace", true);
     }
     ///////////////////////////////////////////////////////////////////////////
     // instantiate top level

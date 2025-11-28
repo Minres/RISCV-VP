@@ -85,8 +85,8 @@ void CLIParser::build() {
                     "core or isa name to use for simulation, use '?' to get list")
             ("dump-ir",
                     "dump the intermediate representation")
-			("dump-structure", po::value<std::string>(),
-					"dump model structure to ELK file")
+            ("dump-structure", po::value<std::string>(),
+                    "dump model structure to ELK file")
             ("quantum", po::value<unsigned>()->default_value(100),
                     "SystemC quantum time in ns")
             ("reset,r", po::value<std::string>(),
@@ -99,6 +99,8 @@ void CLIParser::build() {
                     "set th ename of the trace file")
             ("max_time,m", po::value<std::string>(),
                     "maximum time to run")
+            ("parameter,p", po::value<std::vector<std::string>>(),
+                    "parameter to set, value has the form of <parm name>=<parm value>")
             ("config-file,c", po::value<std::string>()->default_value(""),
                     "read configuration from file")
             ("plugin,p", po::value<std::vector<std::string>>(),
