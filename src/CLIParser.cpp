@@ -103,7 +103,7 @@ void CLIParser::build() {
                     "parameter to set, value has the form of <parm name>=<parm value>")
             ("config-file,c", po::value<std::string>()->default_value(""),
                     "read configuration from file")
-            ("plugin,p", po::value<std::vector<std::string>>(),
+            ("plugin", po::value<std::vector<std::string>>(),
                     "plugin(s) to activate")
             ("dump-config,dc", po::value<std::string>()->default_value(""),
                     "dump configuration to file file");
