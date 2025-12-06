@@ -5,7 +5,6 @@
  */
 
 #include "system.h"
-
 #include <minres/timer.h>
 #include <minres/uart.h>
 #include <scc/utilities.h>
@@ -57,9 +56,9 @@ system::system(sc_core::sc_module_name nm)
 
     aclint.mtime_clk_i(mtime_clk);
     aclint.mtime_o(mtime_s);
-    aclint.mtime_int_o(mtime_int_s);
-    aclint.msip_int_o(msip_int_s);
-    irq_ctrl.irq_o(core_int_s);
+    aclint.mtime_int_o[0](clint_int_s[sysc::riscv::TIMER_IRQ]);
+    aclint.msip_int_o[0](clint_int_s[sysc::riscv::SW_IRQ]);
+    irq_ctrl.irq_o(clint_int_s[sysc::riscv::EXT_IRQ]);
     irq_ctrl.pending_irq_i(irq_int_s);
 
     uart0.irq_o(irq_int_s[0]);
@@ -68,10 +67,7 @@ system::system(sc_core::sc_module_name nm)
     qspi.irq_o(irq_int_s[3]);
 
     core_complex.mtime_i(mtime_s);
-    core_complex.timer_irq_i(mtime_int_s);
-    core_complex.ext_irq_i(core_int_s);
-    core_complex.local_irq_i(local_int_s);
-    core_complex.sw_irq_i(msip_int_s);
+    core_complex.clint_irq_i(clint_int_s);
 
     gpio0.pins_i(pins_i);
     gpio0.pins_o(pins_o);
