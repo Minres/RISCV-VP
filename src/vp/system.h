@@ -66,7 +66,7 @@ private:
     sc_core::sc_signal<bool, sc_core::SC_MANY_WRITERS> rst_s{"rst_s"};
 
     sc_core::sc_vector<sc_core::sc_signal<bool, sc_core::SC_MANY_WRITERS>> irq_int_s{"irq_int_s", 32};
-    sc_core::sc_vector<sc_core::sc_signal<bool, sc_core::SC_MANY_WRITERS>> clint_int_s{"clint_int_s", 16};
+    sc_core::sc_vector<sc_core::sc_signal<bool, sc_core::SC_MANY_WRITERS>> clint_int_s{"clint_int_s", 32};
     sc_core::sc_signal<uint64_t> mtime_s{"mtime_s"};
     void gen_reset();
 };
