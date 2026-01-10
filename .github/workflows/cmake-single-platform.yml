@@ -1,11 +1,7 @@
 name: Smoketest
 on:
   push:
-<<<<<<< HEAD
-    branches: [ "main" ]
-=======
-    branches: [ "*" ]
->>>>>>> 59096e7 (updates github action)
+    branches: [ "main", "develop" ]
   pull_request:
     branches: [ "main" ]
 
@@ -43,9 +39,4 @@ jobs:
     - name: Smoke Test
       working-directory: ${{github.workspace}}
       run: build/${{env.BUILD_TYPE}}/src/riscv-vp --isa 'rv32gc_msu' -v INFO -f fw/hello-world/hello.elf
-
-
-
-
-
 
