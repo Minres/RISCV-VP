@@ -1,0 +1,47 @@
+name: Smoketest
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout SystemC-Components
+      uses: actions/checkout@v6
+      with:
+        submodules: true
+
+    - name: Cache Conan
+      uses: actions/cache@v4
+      with:
+        path: ~/.conan2
+        key: conan-${{ runner.os }}-unit-cpp${{ matrix.cpp_std }}-${{ hashFiles('conanfile.py') }}
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y g++ python3-pip cmake ninja-build
+        pip3 install -r requirements.txt
+
+    - name: Configure
+      run: cmake --preset ${{env.BUILD_TYPE}}
+
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build/${{env.BUILD_TYPE}} --config ${{env.BUILD_TYPE}}
+
+    - name: Smoke Test
+      working-directory: ${{github.workspace}}
+      run: build/${{env.BUILD_TYPE}}/src/riscv-vp --isa 'rv32gc_msu' -v INFO -f fw/hello-world/hello.elf
+
+
+
+
+
+
