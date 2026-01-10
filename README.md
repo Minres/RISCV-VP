@@ -1,3 +1,5 @@
+[![Smoke Test](https://github.com/Minres/RISCV-VP/actions/workflows/cmake-single-platform.yml/badge.svg)](https://github.com/Minres/RISCV-VP/actions/workflows/cmake-single-platform.yml)
+
 # RISCV-VP
 
 A RISC-V VP using VP-VIBES peripherals.
