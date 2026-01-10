@@ -16,20 +16,18 @@ using namespace vpvper::minres;
 
 system::system(sc_core::sc_module_name nm)
 : sc_core::sc_module(nm)
-, NAMED(ahb_router, 3, 2)
+, NAMED(ahb_router, 5, 2)
 , NAMED(apbBridge, PipelinedMemoryBusToApbBridge_map.size(), 1) {
     mtime_clk = (1.0 / 32768) * 1_sec;
 
     core_complex.ibus(ahb_router.target[0]);
     core_complex.dbus(ahb_router.target[1]);
 
-    ahb_router.initiator.at(0)(qspi.xip_sck);
-    ahb_router.set_target_range(0, 0x20000000, 16_MB);
-    ahb_router.initiator.at(1)(mem_ram.target);
-    ahb_router.set_target_range(1, 0x00000000, 128_kB);
-    ahb_router.initiator.at(2)(apbBridge.target[0]);
-    ahb_router.set_target_range(2, 0x10000000, 256_MB);
-
+    ahb_router.bind_target(mem_ram.target, 1, 0x00000000, 128_kB);
+    ahb_router.bind_target(apbBridge.target[0], 2, 0x10000000, 128_MB);
+    ahb_router.bind_target(eth0.socket, 3, 0x18000000, 4_KiB);
+    ahb_router.bind_target(eth1.socket, 4, 0x18001000, 4_KiB);
+    ahb_router.bind_target(qspi.xip_sck, 0, 0x20000000, 16_MB);
     size_t i = 0;
     for(const auto& e : PipelinedMemoryBusToApbBridge_map) {
         apbBridge.initiator.at(i)(e.target);
@@ -45,6 +43,8 @@ system::system(sc_core::sc_module_name nm)
     qspi.clk_i(clk_i);
     core_complex.clk_i(clk_i);
     // mem_ram.clk_i(clk_i);
+    eth0.clk_i(clk_i);
+    eth1.clk_i(clk_i);
 
     gpio0.rst_i(rst_s);
     uart0.rst_i(rst_s);
@@ -53,6 +53,8 @@ system::system(sc_core::sc_module_name nm)
     irq_ctrl.rst_i(rst_s);
     qspi.rst_i(rst_s);
     core_complex.rst_i(rst_s);
+    eth0.rst_i(rst_s);
+    eth1.rst_i(rst_s);
 
     aclint.mtime_clk_i(mtime_clk);
     aclint.mtime_o(mtime_s);

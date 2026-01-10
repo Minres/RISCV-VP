@@ -10,6 +10,7 @@
 #include "tlm/scc/quantum_keeper.h"
 #include <cci_configuration>
 #include <minres/aclint.h>
+#include <minres/ethmac.h>
 #include <minres/gpio.h>
 #include <minres/irq.h>
 #include <minres/qspi.h>
@@ -58,6 +59,8 @@ private:
     vpvper::minres::aclint_tl aclint{"aclint"};
     vpvper::minres::irq_tl irq_ctrl{"irq_ctrl"};
     vpvper::minres::qspi_tl qspi{"qspi"};
+    vpvper::minres::ethmac eth0{"eth0"};
+    vpvper::minres::ethmac eth1{"eth1"};
 
     scc::memory<128_kB, scc::LT> mem_ram{"mem_ram"};
     scc::memory<8_kB, scc::LT> boot_rom{"boot_rom"};
