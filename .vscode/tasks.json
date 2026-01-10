@@ -2,9 +2,65 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "CMake-and-make",
+			"label": "Build 32bit FW",
 			"type": "shell",
-			"command": "source .venv/bin/activate && cmake -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCMAKE_EXPORT_COMPILE_COMMANDS=ON && cmake --build build",
+			"command": "make -C fw/hello-world clean all",
+			"problemMatcher": [],
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "dedicated",
+				"showReuseMessage": false,
+				"clear": true
+			}
+		},
+{
+			"label": "Build 64bit FW",
+			"type": "shell",
+			"command": "make -C fw/hello-world RISCV_ARCH=rv64imc RISCV_ABI=lp64 clean all",
+			"problemMatcher": [],
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "dedicated",
+				"showReuseMessage": false,
+				"clear": true
+			}
+		},
+		{
+			"label": "Run 32bit VP",
+			"type": "shell",
+			"command": "build/Debug/src/riscv-vp --isa 'rv32gc|msu_vp' -f fw/hello-world/hello.elf",
+			"problemMatcher": [],
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "dedicated",
+				"showReuseMessage": false,
+				"clear": true
+			}
+		},
+		{
+			"label": "Run 64bit VP",
+			"type": "shell",
+			"command": "build/Debug/src/riscv-vp --isa 'rv64gc|msu_vp' -f fw/hello-world/hello.elf",
+			"problemMatcher": [],
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "dedicated",
+				"showReuseMessage": false,
+				"clear": true
+			}
+		},
+		{
+			"label": "Run 32bit VP with GDB-Server",
+			"type": "shell",
+			"command": "build/Debug/src/riscv-vp --isa 'rv32gc|msu_vp' -f fw/hello-world/hello.elf -g 10000",
 			"problemMatcher": [],
 			"presentation": {
 				"echo": true,
@@ -14,43 +70,11 @@
 				"showReuseMessage": false,
 				"clear": true
 			},
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			}
 		},
 		{
-			"label": "Build-FW",
+			"label": "Run 64bit VP with GDB-Server",
 			"type": "shell",
-			"command": "cd fw/hello-world/ && make",
-			"problemMatcher": [],
-			"presentation": {
-				"echo": true,
-				"reveal": "always",
-				"focus": true,
-				"panel": "dedicated",
-				"showReuseMessage": false,
-				"clear": true
-			}
-		},
-		{
-			"label": "Execute-VP",
-			"type": "shell",
-			"command": "build/src/tgc-vp -f fw/hello-world/hello -p pctrace=contrib/TGC_C_cycles.json",
-			"problemMatcher": [],
-			"presentation": {
-				"echo": true,
-				"reveal": "always",
-				"focus": true,
-				"panel": "dedicated",
-				"showReuseMessage": false,
-				"clear": true
-			}
-		},
-		{
-			"label": "VP-GDB-Server",
-			"type": "shell",
-			"command": "build/src/tgc-vp -f fw/hello-world/hello -g 10000",
+			"command": "build/Debug/src/riscv-vp --isa 'rv64gc|msu_vp' -v TRACEALL -f fw/hello-world/hello.elf -g 10000 |& tee run.log",
 			"problemMatcher": [],
 			"presentation": {
 				"echo": true,
