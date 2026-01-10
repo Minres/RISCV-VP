@@ -42,5 +42,5 @@ jobs:
 
     - name: Smoke Test
       working-directory: ${{github.workspace}}
-      run: ${{github.workspace}}/build/${{env.BUILD_TYPE}}/src/riscv-vp -f ${{github.workspace}}/fw/hello-world/hello.elf
+      run: ${{github.workspace}}/build/${{env.BUILD_TYPE}}/src/riscv-vp -f ${{github.workspace}}/fw/hello-world/prebuilt/hello.elf
 
