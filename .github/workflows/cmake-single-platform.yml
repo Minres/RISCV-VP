@@ -1,4 +1,4 @@
-name: Smoketest
+name: Smoke Test
 on:
   push:
     branches: [ "main", "develop" ]
@@ -13,12 +13,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout SystemC-Components
+    - name: Checkout Sources
       uses: actions/checkout@v6
       with:
         submodules: true
 
-    - name: Cache Conan
+    - name: Smoke Test
+      working-directory: ${{github.workspace}}
+      run: git submodule update --recursive --init
+
+      - name: Cache Conan
       uses: actions/cache@v4
       with:
         path: ~/.conan2
