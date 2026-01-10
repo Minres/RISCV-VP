@@ -1,7 +1,11 @@
 name: Smoketest
 on:
   push:
+<<<<<<< HEAD
     branches: [ "main" ]
+=======
+    branches: [ "*" ]
+>>>>>>> 59096e7 (updates github action)
   pull_request:
     branches: [ "main" ]
 
