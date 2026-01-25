@@ -26,3 +26,4 @@ CMakeSettings.json
 /install
 .gdb_history
 /dbt-rise-custom
+*.pcap

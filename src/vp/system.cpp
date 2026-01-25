@@ -14,6 +14,19 @@ namespace vp {
 using namespace sc_core;
 using namespace vpvper::minres;
 
+#define UART0_IRQ 16
+#define TIMER0_IRQ0 17
+#define TIMER0_IRQ1 18
+#define QSPI_IRQ 19
+#define I2S_IRQ 20
+#define CAM_IRQ 21
+#define DMA_IRQ 22
+#define GPIO_ORQ 23
+#define ETH0_IRQ 24
+#define ETH1_IRQ 25
+#define MDIO0_IRQ 26
+#define MDIO1_IRQ 27
+
 system::system(sc_core::sc_module_name nm)
 : sc_core::sc_module(nm)
 , NAMED(ahb_router, 5, 2)
@@ -39,7 +52,6 @@ system::system(sc_core::sc_module_name nm)
     uart0.clk_i(clk_i);
     timer0.clk_i(clk_i);
     aclint.clk_i(clk_i);
-    irq_ctrl.clk_i(clk_i);
     qspi.clk_i(clk_i);
     core_complex.clk_i(clk_i);
     // mem_ram.clk_i(clk_i);
@@ -50,7 +62,6 @@ system::system(sc_core::sc_module_name nm)
     uart0.rst_i(rst_s);
     timer0.rst_i(rst_s);
     aclint.rst_i(rst_s);
-    irq_ctrl.rst_i(rst_s);
     qspi.rst_i(rst_s);
     core_complex.rst_i(rst_s);
     eth0.rst_i(rst_s);
@@ -60,13 +71,19 @@ system::system(sc_core::sc_module_name nm)
     aclint.mtime_o(mtime_s);
     aclint.mtime_int_o[0](clint_int_s[sysc::riscv::TIMER_IRQ]);
     aclint.msip_int_o[0](clint_int_s[sysc::riscv::SW_IRQ]);
-    irq_ctrl.irq_o(clint_int_s[sysc::riscv::EXT_IRQ]);
-    irq_ctrl.pending_irq_i(irq_int_s);
 
-    uart0.irq_o(irq_int_s[0]);
-    timer0.interrupt_o[0](irq_int_s[1]);
-    timer0.interrupt_o[1](irq_int_s[2]);
-    qspi.irq_o(irq_int_s[3]);
+    uart0.irq_o(clint_int_s[UART0_IRQ]);
+    timer0.interrupt_o[0](clint_int_s[TIMER0_IRQ0]);
+    timer0.interrupt_o[1](clint_int_s[TIMER0_IRQ1]);
+    qspi.irq_o(clint_int_s[QSPI_IRQ]);
+    eth0.eth_tx(eth0_tx);
+    eth0_rx(eth0.eth_rx);
+    eth1.eth_tx(eth1_tx);
+    eth1_rx(eth1.eth_rx);
+    eth0.irq_o[0](clint_int_s[ETH0_IRQ]);
+    eth1.irq_o[0](clint_int_s[ETH1_IRQ]);
+    eth0.irq_o[1](clint_int_s[MDIO0_IRQ]);
+    eth1.irq_o[1](clint_int_s[MDIO1_IRQ]);
 
     core_complex.mtime_i(mtime_s);
     core_complex.clint_irq_i(clint_int_s);

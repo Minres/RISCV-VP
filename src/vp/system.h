@@ -42,6 +42,10 @@ public:
     sc_core::sc_vector<sc_core::sc_in<bool>> t0_clear_i{"t0_clear_i", vpvper::minres::timer::CLEAR_CNT};
     sc_core::sc_vector<sc_core::sc_in<bool>> t0_tick_i{"t0_tick_i", vpvper::minres::timer::TICK_CNT - 1};
     spi::spi_pkt_initiator_socket<> mspi0{"mspi0"};
+    eth::eth_pkt_initiator_socket<> eth0_tx{"eth0_tx"};
+    eth::eth_pkt_target_socket<> eth0_rx{"eth0_rx"};
+    eth::eth_pkt_initiator_socket<> eth1_tx{"eth1_tx"};
+    eth::eth_pkt_target_socket<> eth1_rx{"eth1_rx"};
 
     sc_core::sc_in<sc_core::sc_time> clk_i{"clk_i"};
 
@@ -57,10 +61,9 @@ private:
     vpvper::minres::uart_tl uart0{"uart0"};
     vpvper::minres::timer_tl timer0{"timer0"};
     vpvper::minres::aclint_tl aclint{"aclint"};
-    vpvper::minres::irq_tl irq_ctrl{"irq_ctrl"};
     vpvper::minres::qspi_tl qspi{"qspi"};
-    vpvper::minres::ethmac eth0{"eth0"};
-    vpvper::minres::ethmac eth1{"eth1"};
+    vpvper::minres::ethmac_tl eth0{"eth0"};
+    vpvper::minres::ethmac_tl eth1{"eth1"};
 
     scc::memory<128_kB, scc::LT> mem_ram{"mem_ram"};
     scc::memory<8_kB, scc::LT> boot_rom{"boot_rom"};
@@ -68,7 +71,6 @@ private:
     sc_core::sc_signal<sc_core::sc_time> mtime_clk{"mtime_clk"};
     sc_core::sc_signal<bool, sc_core::SC_MANY_WRITERS> rst_s{"rst_s"};
 
-    sc_core::sc_vector<sc_core::sc_signal<bool, sc_core::SC_MANY_WRITERS>> irq_int_s{"irq_int_s", 32};
     sc_core::sc_vector<sc_core::sc_signal<bool, sc_core::SC_MANY_WRITERS>> clint_int_s{"clint_int_s", 32};
     sc_core::sc_signal<uint64_t> mtime_s{"mtime_s"};
     void gen_reset();
