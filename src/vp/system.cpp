@@ -33,8 +33,11 @@ system::system(sc_core::sc_module_name nm)
 , NAMED(apbBridge, PipelinedMemoryBusToApbBridge_map.size(), 1) {
     mtime_clk = (1.0 / 32768) * 1_sec;
 
+    clint_int_s.init(core_complex.clint_irq_i.size());
     core_complex.ibus(ahb_router.target[0]);
     core_complex.dbus(ahb_router.target[1]);
+    core_complex.mtime_i(mtime_s);
+    core_complex.clint_irq_i(clint_int_s);
 
     ahb_router.bind_target(mem_ram.target, 1, 0x00000000, 128_kB);
     ahb_router.bind_target(apbBridge.target[0], 2, 0x10000000, 128_MB);
@@ -48,22 +51,21 @@ system::system(sc_core::sc_module_name nm)
         i++;
     }
 
+    core_complex.clk_i(clk_i);
     gpio0.clk_i(clk_i);
     uart0.clk_i(clk_i);
     timer0.clk_i(clk_i);
     aclint.clk_i(clk_i);
     qspi.clk_i(clk_i);
-    core_complex.clk_i(clk_i);
-    // mem_ram.clk_i(clk_i);
     eth0.clk_i(clk_i);
     eth1.clk_i(clk_i);
 
+    core_complex.rst_i(rst_s);
     gpio0.rst_i(rst_s);
     uart0.rst_i(rst_s);
     timer0.rst_i(rst_s);
     aclint.rst_i(rst_s);
     qspi.rst_i(rst_s);
-    core_complex.rst_i(rst_s);
     eth0.rst_i(rst_s);
     eth1.rst_i(rst_s);
 
@@ -76,17 +78,10 @@ system::system(sc_core::sc_module_name nm)
     timer0.interrupt_o[0](clint_int_s[TIMER0_IRQ0]);
     timer0.interrupt_o[1](clint_int_s[TIMER0_IRQ1]);
     qspi.irq_o(clint_int_s[QSPI_IRQ]);
-    eth0.eth_tx(eth0_tx);
-    eth0_rx(eth0.eth_rx);
-    eth1.eth_tx(eth1_tx);
-    eth1_rx(eth1.eth_rx);
     eth0.irq_o[0](clint_int_s[ETH0_IRQ]);
     eth1.irq_o[0](clint_int_s[ETH1_IRQ]);
     eth0.irq_o[1](clint_int_s[MDIO0_IRQ]);
     eth1.irq_o[1](clint_int_s[MDIO1_IRQ]);
-
-    core_complex.mtime_i(mtime_s);
-    core_complex.clint_irq_i(clint_int_s);
 
     gpio0.pins_i(pins_i);
     gpio0.pins_o(pins_o);
@@ -99,6 +94,11 @@ system::system(sc_core::sc_module_name nm)
     timer0.tick_i(t0_tick_i);
 
     qspi.spi_i(mspi0);
+
+    eth0.eth_tx(eth0_tx);
+    eth0_rx(eth0.eth_rx);
+    eth1.eth_tx(eth1_tx);
+    eth1_rx(eth1.eth_rx);
 
     SC_METHOD(gen_reset);
     sensitive << erst_n;

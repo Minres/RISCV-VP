@@ -71,7 +71,7 @@ private:
     sc_core::sc_signal<sc_core::sc_time> mtime_clk{"mtime_clk"};
     sc_core::sc_signal<bool, sc_core::SC_MANY_WRITERS> rst_s{"rst_s"};
 
-    sc_core::sc_vector<sc_core::sc_signal<bool, sc_core::SC_MANY_WRITERS>> clint_int_s{"clint_int_s", 32};
+    sc_core::sc_vector<sc_core::sc_signal<bool, sc_core::SC_MANY_WRITERS>> clint_int_s{"clint_int_s", 0};
     sc_core::sc_signal<uint64_t> mtime_s{"mtime_s"};
     void gen_reset();
 };
