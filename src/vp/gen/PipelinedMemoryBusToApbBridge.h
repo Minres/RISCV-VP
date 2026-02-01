@@ -12,7 +12,7 @@
 // need double braces, see
 // https://stackoverflow.com/questions/6893700/how-to-construct-stdarray-object-with-initializer-list#6894191
 const std::array<scc::target_memory_map_entry<scc::LT>, 6> PipelinedMemoryBusToApbBridge_map = {{
-    {gpio0.socket, 0x0, 0xc},
+    {gpio0.socket, 0x0, 0x38},
     {uart0.socket, 0x1000, 0x14},
     {timer0.socket, 0x20000, 0x1c},
     {aclint.socket, 0x30000, 0xc000},
