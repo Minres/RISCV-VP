@@ -66,6 +66,7 @@ private:
     vpvper::minres::ethmac_tl eth1{"eth1"};
 
     scc::memory<128_kB, scc::LT> mem_ram{"mem_ram"};
+    scc::memory<2_GB, scc::LT> mem_dram{"mem_dram"};
     scc::memory<8_kB, scc::LT> boot_rom{"boot_rom"};
 
     sc_core::sc_signal<sc_core::sc_time> mtime_clk{"mtime_clk"};
