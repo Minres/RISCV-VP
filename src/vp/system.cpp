@@ -39,12 +39,12 @@ system::system(sc_core::sc_module_name nm)
     core_complex.mtime_i(mtime_s);
     core_complex.clint_irq_i(clint_int_s);
 
-    ahb_router.bind_target(mem_dram.target, 0, 0x00000000, mem_dram.getSize());
-    ahb_router.bind_target(mem_ram.target, 1, 0xE0000000, mem_ram.getSize());
-    ahb_router.bind_target(apbBridge.target[0], 2, 0xF0000000, 16_MB);
-    ahb_router.bind_target(eth0.socket, 3, 0xF1000000, 4_KiB);
-    ahb_router.bind_target(eth1.socket, 4, 0xF1001000, 4_KiB);
-    ahb_router.bind_target(qspi.xip_sck, 5, 0xF2000000, 16_MB);
+    ahb_router.bind_target(apbBridge.target[0], 0, 0x10000000, 16_MB);
+    ahb_router.bind_target(eth0.socket, 1, 0x11000000, 4_KiB);
+    ahb_router.bind_target(eth1.socket, 2, 0x11001000, 4_KiB);
+    ahb_router.bind_target(qspi.xip_sck, 3, 0x20000000, 16_MB);
+    ahb_router.bind_target(mem_ram.target, 4, 0x30000000, mem_ram.getSize());
+    ahb_router.bind_target(mem_dram.target, 5, 0x40000000, mem_dram.getSize());
     size_t i = 0;
     for(const auto& e : PipelinedMemoryBusToApbBridge_map) {
         apbBridge.initiator.at(i)(e.target);
