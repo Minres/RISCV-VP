@@ -5,9 +5,12 @@
  */
 
 #include "system.h"
+#include <filesystem>
 #include <minres/timer.h>
 #include <minres/uart.h>
 #include <scc/utilities.h>
+#include <util/ihex.h>
+#include <vector>
 
 namespace vp {
 
@@ -29,7 +32,7 @@ using namespace vpvper::minres;
 
 system::system(sc_core::sc_module_name nm)
 : sc_core::sc_module(nm)
-, NAMED(ahb_router, 6, 2)
+, NAMED(ahb_router, 7, 2)
 , NAMED(apbBridge, PipelinedMemoryBusToApbBridge_map.size(), 1) {
     mtime_clk = (1.0 / 32768) * 1_sec;
 
@@ -44,7 +47,8 @@ system::system(sc_core::sc_module_name nm)
     ahb_router.bind_target(eth1.socket, 2, 0x11001000, 4_KiB);
     ahb_router.bind_target(qspi.xip_sck, 3, 0x20000000, 16_MB);
     ahb_router.bind_target(mem_ram.target, 4, 0x30000000, mem_ram.getSize());
-    ahb_router.bind_target(mem_dram.target, 5, 0x40000000, mem_dram.getSize());
+    ahb_router.bind_target(mem_trace.target, 5, 0x31000000, mem_trace.getSize());
+    ahb_router.bind_target(mem_dram.target, 6, 0x40000000, mem_dram.getSize());
     size_t i = 0;
     for(const auto& e : PipelinedMemoryBusToApbBridge_map) {
         apbBridge.initiator.at(i)(e.target);
@@ -109,6 +113,35 @@ void system::gen_reset() {
         rst_s = 0;
     else
         rst_s = 1;
+}
+
+void system::start_of_simulation() {
+    if(trace_dump_file.get_value().size()) {
+        trace_buffer.resize(1_MiB);
+        tlm::tlm_generic_payload gp;
+        gp.set_address(0);
+        gp.set_command(tlm::TLM_IGNORE_COMMAND);
+        gp.set_data_length(trace_buffer.size());
+        gp.set_streaming_width(trace_buffer.size());
+        scc::host_mem_map_extension ext{trace_buffer.data()};
+        gp.set_extension(&ext);
+        mem_trace.target.get_base_interface().transport_dbg(gp);
+        gp.set_extension<scc::host_mem_map_extension>(nullptr);
+    }
+}
+
+void system::end_of_simulation() {
+    auto& file_name = trace_dump_file.get_value();
+    if(file_name.size()) {
+        std::filesystem::path p(file_name);
+        if(p.extension().string() == ".ihex") {
+            std::ofstream out(file_name);
+            util::ihex::dump(out, trace_buffer, 0, 64);
+        } else {
+            std::ofstream out(file_name, std::ios::binary);
+            out.write(reinterpret_cast<const char*>(trace_buffer.data()), trace_buffer.size() * sizeof(uint8_t));
+        }
+    }
 }
 
 } // namespace vp
