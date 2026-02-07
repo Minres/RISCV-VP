@@ -7,7 +7,6 @@
 #ifndef SRC_VP_SYSTEM_H_
 #define SRC_VP_SYSTEM_H_
 
-#include "tlm/scc/quantum_keeper.h"
 #include <cci_configuration>
 #include <minres/aclint.h>
 #include <minres/ethmac.h>
@@ -26,6 +25,7 @@
 #include <sysc/kernel/sc_module.h>
 #include <sysc/kernel/sc_time.h>
 #include <sysc/utils/sc_vector.h>
+#include <tlm/scc/quantum_keeper.h>
 #include <tlm/scc/tlm_signal_sockets.h>
 
 namespace vp {
@@ -46,6 +46,8 @@ public:
     eth::eth_pkt_target_socket<> eth0_rx{"eth0_rx"};
     eth::eth_pkt_initiator_socket<> eth1_tx{"eth1_tx"};
     eth::eth_pkt_target_socket<> eth1_rx{"eth1_rx"};
+
+    cci::cci_param<std::string> trace_dump_file{"trace_dump_file", ""};
 
     sc_core::sc_in<sc_core::sc_time> clk_i{"clk_i"};
 
@@ -68,13 +70,19 @@ private:
     scc::memory<256_kB, scc::LT> mem_ram{"mem_ram"};
     scc::memory<1_GB, scc::LT> mem_dram{"mem_dram"};
     scc::memory<8_kB, scc::LT> boot_rom{"boot_rom"};
+    scc::memory<1_MiB, scc::LT> mem_trace{"mem_trace"};
 
     sc_core::sc_signal<sc_core::sc_time> mtime_clk{"mtime_clk"};
     sc_core::sc_signal<bool, sc_core::SC_MANY_WRITERS> rst_s{"rst_s"};
 
     sc_core::sc_vector<sc_core::sc_signal<bool, sc_core::SC_MANY_WRITERS>> clint_int_s{"clint_int_s", 0};
     sc_core::sc_signal<uint64_t> mtime_s{"mtime_s"};
+
+    std::vector<uint8_t> trace_buffer;
+
     void gen_reset();
+    void start_of_simulation() override;
+    void end_of_simulation() override;
 };
 
 } // namespace vp

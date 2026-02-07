@@ -27,3 +27,5 @@ CMakeSettings.json
 .gdb_history
 /dbt-rise-custom
 *.pcap
+*.ihex
+*.trx
