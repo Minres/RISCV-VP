@@ -46,41 +46,6 @@
         },
         {
             "type": "gdbtarget",
-            "request": "launch",
-            "name": "Debug hello world 32bit",
-            "program": "fw/hello-world/hello.elf",
-            "imageAndSymbols": {
-                "symbolFileName": "fw/hello-world/hello.elf"
-            },
-            "target": {
-                "server": "${workspaceFolder}/build/RelWithDebInfo/src/riscv-vp",
-                "serverParameters": [
-                    "--isa",
-                    "rv32gc_msu",
-                    "-v",
-                    "INFO",
-                    "-f",
-                    "fw/hello-world/hello.elf",
-                    "-g",
-                    "10000"
-                ],
-                "watchServerProcess": true,
-                "port": "10000"
-            },
-            "cwd": "${workspaceRoot}",
-            "gdb": "riscv64-unknown-elf-gdb",
-            "openGdbConsole": false,
-            "presentation": {
-                "hidden": false,
-                "group": "FW Debug",
-                "order": 2
-            },
-            "initCommands": [
-                "b main"
-            ]
-        },
-        {
-            "type": "gdbtarget",
             "request": "attach",
             "name": "Attach GDB to VP",
             "program": "./fw/hello-world/hello.elf",
@@ -114,8 +79,8 @@
             "name": "32bit VP",
             "cwd": "${workspaceRoot}",
             "program": "${workspaceFolder}/build/Debug/src/riscv-vp",
-            "arguments": "--isa 'rv32gc_msu' -v INFO -f fw/hello-world/hello.elf",
-            "openGdbConsole": true,
+            "arguments": "--isa 'rv32imac_mu' -v INFO -f fw/hello-world/hello.elf",
+            "openGdbConsole": false,
             "initCommands": [
                 "set breakpoint pending on",
                 "set breakpoint auto-hw on",
@@ -167,6 +132,60 @@
             "cwd": "${workspaceRoot}",
             "program": "${workspaceFolder}/build/Debug/dbt-rise-riscv/riscv-sim",
             "arguments": "--isa ?",
+            "openGdbConsole": true
+        },
+        {
+            "type": "gdb",
+            "request": "launch",
+            "name": "RISCV-SIM TGC5D",
+            "cwd": "${workspaceRoot}",
+            "program": "${workspaceFolder}/build/Debug/dbt-rise-riscv/riscv-sim",
+            "arguments": "-v 5 --isa tgc5d -f fw/hello-world/hello.elf",
+            "openGdbConsole": true
+        },
+        {
+            "type": "gdb",
+            "request": "launch",
+            "name": "RISCV-VP tcp_main.elf 32bit",
+            "cwd": "${workspaceRoot}",
+            "program": "${workspaceFolder}/build/Debug/src/riscv-vp",
+            "arguments": "-v INFO --isa rv32imac_mu -f ${workspaceFolder}/../ThreadX4TGFS/build/Debug32/tcp_demo.elf -m 0.05s",
+            "openGdbConsole": false
+        },
+        {
+            "type": "gdb",
+            "request": "launch",
+            "name": "RISCV-VP tcp_main.elf 64bit",
+            "cwd": "${workspaceRoot}",
+            "program": "${workspaceFolder}/build/Debug/src/riscv-vp",
+            "arguments": "-v INFO --isa rv64gc_mu -f ${workspaceFolder}/../ThreadX4TGFS/build/Debug/tcp_demo.elf -m 0.05s",
+            "openGdbConsole": false
+        },
+        {
+            "type": "gdb",
+            "request": "launch",
+            "name": "RISCV-VP ADS tcp_main.elf 32bit",
+            "cwd": "${workspaceRoot}",
+            "program": "${workspaceFolder}/build/Debug/src/riscv-vp",
+            "arguments": "-v DEBUG --isa rv32imac_mu -f /home/eyck/Projects/MINRES/ADS-VP-Demo-FW/build/Debug32/tcp_demo.elf -m 0.2s -p tb.top.trace_dump_file=trace.trx -p 'tb.eth*.channel_delay=1ms'",
+            "openGdbConsole": false
+        },
+        {
+            "type": "gdb",
+            "request": "launch",
+            "name": "RISCV-VP ADS tcp_main.elf 64bit",
+            "cwd": "${workspaceRoot}",
+            "program": "${workspaceFolder}/build/Debug/src/riscv-vp",
+            "arguments": "-v INFO --isa rv64gc_mu -f /home/eyck/Projects/MINRES/ADS-VP-Demo-FW/build/Debug/tcp_demo.elf -m 0.05s",
+            "openGdbConsole": false
+        },
+        {
+            "type": "gdb",
+            "request": "launch",
+            "name": "RISCV-VP tcp_main.elf with debug server",
+            "cwd": "${workspaceRoot}",
+            "program": "${workspaceFolder}/build/Debug/src/riscv-vp",
+            "arguments": "-v INFO --isa rv32gc_mu -f ${workspaceFolder}/../ThreadX4TGFS/build/Debug32/tcp_demo.elf -m 0.05s -g 1234",
             "openGdbConsole": true
         }
     ],
