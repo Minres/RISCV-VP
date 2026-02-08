@@ -7,6 +7,7 @@
 #ifndef SRC_VP_TB_H_
 #define SRC_VP_TB_H_
 
+#include "eth/eth_tlm.h"
 #include "system.h"
 #include <generic/rst_gen.h>
 #include <generic/spi_mem.h>
@@ -29,6 +30,7 @@ public:
     sc_core::sc_vector<sc_core::sc_signal<bool>> t0_clear_i{"t0_clear_i", vpvper::minres::timer::CLEAR_CNT};
     sc_core::sc_vector<sc_core::sc_signal<bool>> t0_tick_i{"t0_tick_i", vpvper::minres::timer::TICK_CNT - 1};
     spi::spi_channel spi{"spi", 1};
+    eth::eth_channel eth0to1{"eth0to1"}, eth1to0{"eth1to0"};
     vpvper::generic::spi_mem qspi_mem{"qspi_mem"};
     sc_core::sc_signal<sc_core::sc_time> clk_i{"clk_i"};
 };
