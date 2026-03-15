@@ -17,18 +17,20 @@ namespace vp {
 using namespace sc_core;
 using namespace vpvper::minres;
 
-#define UART0_IRQ 16
-#define TIMER0_IRQ0 17
-#define TIMER0_IRQ1 18
-#define QSPI_IRQ 19
-#define I2S_IRQ 20
-#define CAM_IRQ 21
-#define DMA_IRQ 22
-#define GPIO_ORQ 23
-#define ETH0_IRQ 24
-#define ETH1_IRQ 25
-#define MDIO0_IRQ 26
-#define MDIO1_IRQ 27
+enum {
+    UART0_IRQ = 16,
+    TIMER0_IRQ0 = 17,
+    TIMER0_IRQ1 = 18,
+    QSPI_IRQ = 19,
+    I2S_IRQ = 20,
+    CAM_IRQ = 21,
+    DMA_IRQ = 22,
+    GPIO_ORQ = 23,
+    ETH0_IRQ = 24,
+    ETH1_IRQ = 25,
+    MDIO0_IRQ = 26,
+    MDIO1_IRQ = 27
+};
 
 system::system(sc_core::sc_module_name nm)
 : sc_core::sc_module(nm)
