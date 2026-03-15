@@ -32,6 +32,10 @@ enum {
     MDIO1_IRQ = 27
 };
 
+#if SC_VERSION_MAJOR < 3
+SC_HAS_PROCESS(system); // NOLINT
+#endif
+
 system::system(sc_core::sc_module_name nm)
 : sc_core::sc_module(nm)
 , NAMED(main_bus, 7, 2)
