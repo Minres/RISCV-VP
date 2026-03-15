@@ -49,12 +49,12 @@ system::system(sc_core::sc_module_name nm)
     core_complex.clint_irq_i(clint_int_s);
 
     main_bus.bind_target(peripheral_bus.target[0], 0, 0x10000000, 16_MB);
-    main_bus.bind_target(eth0.socket, 1, 0x11000000, 4_KiB);
-    main_bus.bind_target(eth1.socket, 2, 0x11001000, 4_KiB);
-    main_bus.bind_target(qspi.xip_sck, 3, 0x20000000, 16_MB);
-    main_bus.bind_target(mem_ram.target, 4, 0x30000000, mem_ram.getSize());
-    main_bus.bind_target(mem_trace.target, 5, 0x31000000, mem_trace.getSize());
-    main_bus.bind_target(mem_dram.target, 6, 0x40000000, mem_dram.getSize());
+    main_bus.bind_target(qspi.xip_sck, 1, 0x20000000, 16_MB);
+    main_bus.bind_target(mem_ram.target, 2, 0x30000000, mem_ram.getSize());
+    main_bus.bind_target(mem_trace.target, 3, 0x31000000, mem_trace.getSize());
+    main_bus.bind_target(mem_dram.target, 4, 0x40000000, mem_dram.getSize());
+    main_bus.bind_target(eth0.socket, 5, 0x11000000, 4_KiB);
+    main_bus.bind_target(eth1.socket, 6, 0x11001000, 4_KiB);
     size_t i = 0;
     for(const auto& e : PipelinedMemoryBusToApbBridge_map) {
         peripheral_bus.initiator.at(i)(e.target);
