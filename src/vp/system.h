@@ -32,7 +32,7 @@ namespace vp {
 
 class system : public sc_core::sc_module {
 public:
-    SC_HAS_PROCESS(system); // NOLINT
+    enum { CLINT_IRQ_SIZE = 32, CLUSTER_ID = 0 };
 
     sc_core::sc_vector<sc_core::sc_out<bool>> pins_o{"pins_o", 32};
     sc_core::sc_vector<sc_core::sc_out<bool>> pins_oe_o{"pins_oe_o", 32};
@@ -58,7 +58,7 @@ public:
 private:
 #include "../vp/gen/PipelinedMemoryBusToApbBridge.h" // IWYU pragma: keep
     sysc::riscv::core_complex<> core_complex{"core_complex"};
-    scc::router<> ahb_router, apbBridge;
+    scc::router<> main_bus, peripheral_bus;
     vpvper::minres::gpio_tl gpio0{"gpio0"};
     vpvper::minres::uart_tl uart0{"uart0"};
     vpvper::minres::timer_tl timer0{"timer0"};
@@ -73,11 +73,14 @@ private:
     scc::memory<1_MiB, scc::LT> mem_trace{"mem_trace"};
 
     sc_core::sc_signal<sc_core::sc_time> mtime_clk{"mtime_clk"};
-    sc_core::sc_signal<bool, sc_core::SC_MANY_WRITERS> rst_s{"rst_s"};
+    template <typename T> using vp_signal = sc_core::sc_signal<T, sc_core::SC_MANY_WRITERS>;
+    vp_signal<bool> rst_s{"rst_s"};
 
-    sc_core::sc_vector<sc_core::sc_signal<bool, sc_core::SC_MANY_WRITERS>> clint_int_s{"clint_int_s", 0};
+    sc_core::sc_vector<vp_signal<bool>> clint_int_s{"clint_int_s", 0};
     sc_core::sc_signal<uint64_t> mtime_s{"mtime_s"};
 
+    sc_core::sc_event_or_list finish_evt_or_list;
+    sc_core::sc_event_and_list finish_evt_and_list;
     std::vector<uint8_t> trace_buffer;
 
     void gen_reset();
