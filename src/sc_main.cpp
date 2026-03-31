@@ -148,16 +148,17 @@ int sc_main(int argc, char* argv[]) {
     ///////////////////////////////////////////////////////////////////////////
     if(auto res = setjmp(abrt)) {
         switch(res) {
-            case SIGHUP:
-            case SIGINT:
-            case SIGQUIT:
-            case SIGTERM:
-            case SIGUSR1:
-            case SIGUSR2:
-                SCCINFO() << "Simulation stopped with signal " << res << ".";
-                break;
-            default:
-                SCCERR() << "Simulation aborted with signal " << res << "!";
+        case SIGHUP:
+        case SIGINT:
+        case SIGQUIT:
+        case SIGTERM:
+        case SIGUSR1:
+        case SIGUSR2:
+            sc_core::sc_stop();
+            SCCINFO() << "Simulation stopped with signal " << sigabbrev_np(res) << ".";
+            break;
+        default:
+            SCCERR() << "Simulation aborted with signal " << sigabbrev_np(res) << "!";
         }
     } else {
         try {
@@ -171,5 +172,5 @@ int sc_main(int argc, char* argv[]) {
             sc_core::sc_report_handler::get_handler()(rep, sc_core::SC_DISPLAY | sc_core::SC_STOP);
         }
     }
-    return 0;
+    return sc_core::sc_report_handler::get_count(SC_ERROR) + sc_core::sc_report_handler::get_count(SC_WARNING);
 }

@@ -17,42 +17,48 @@ namespace vp {
 using namespace sc_core;
 using namespace vpvper::minres;
 
-#define UART0_IRQ 16
-#define TIMER0_IRQ0 17
-#define TIMER0_IRQ1 18
-#define QSPI_IRQ 19
-#define I2S_IRQ 20
-#define CAM_IRQ 21
-#define DMA_IRQ 22
-#define GPIO_ORQ 23
-#define ETH0_IRQ 24
-#define ETH1_IRQ 25
-#define MDIO0_IRQ 26
-#define MDIO1_IRQ 27
+enum {
+    UART0_IRQ = 16,
+    TIMER0_IRQ0 = 17,
+    TIMER0_IRQ1 = 18,
+    QSPI_IRQ = 19,
+    I2S_IRQ = 20,
+    CAM_IRQ = 21,
+    DMA_IRQ = 22,
+    GPIO_ORQ = 23,
+    ETH0_IRQ = 24,
+    ETH1_IRQ = 25,
+    MDIO0_IRQ = 26,
+    MDIO1_IRQ = 27
+};
+
+#if SC_VERSION_MAJOR < 3
+SC_HAS_PROCESS(system); // NOLINT
+#endif
 
 system::system(sc_core::sc_module_name nm)
 : sc_core::sc_module(nm)
-, NAMED(ahb_router, 7, 2)
-, NAMED(apbBridge, PipelinedMemoryBusToApbBridge_map.size(), 1) {
+, NAMED(main_bus, 7, 2)
+, NAMED(peripheral_bus, PipelinedMemoryBusToApbBridge_map.size(), 1) {
     mtime_clk = (1.0 / 32768) * 1_sec;
 
     clint_int_s.init(core_complex.clint_irq_i.size());
-    core_complex.ibus(ahb_router.target[0]);
-    core_complex.dbus(ahb_router.target[1]);
+    core_complex.ibus(main_bus.target[0]);
+    core_complex.dbus(main_bus.target[1]);
     core_complex.mtime_i(mtime_s);
     core_complex.clint_irq_i(clint_int_s);
 
-    ahb_router.bind_target(apbBridge.target[0], 0, 0x10000000, 16_MB);
-    ahb_router.bind_target(eth0.socket, 1, 0x11000000, 4_KiB);
-    ahb_router.bind_target(eth1.socket, 2, 0x11001000, 4_KiB);
-    ahb_router.bind_target(qspi.xip_sck, 3, 0x20000000, 16_MB);
-    ahb_router.bind_target(mem_ram.target, 4, 0x30000000, mem_ram.getSize());
-    ahb_router.bind_target(mem_trace.target, 5, 0x31000000, mem_trace.getSize());
-    ahb_router.bind_target(mem_dram.target, 6, 0x40000000, mem_dram.getSize());
+    main_bus.bind_target(peripheral_bus.target[0], 0, 0x10000000, 16_MB);
+    main_bus.bind_target(qspi.xip_sck, 1, 0x20000000, 16_MB);
+    main_bus.bind_target(mem_ram.target, 2, 0x30000000, mem_ram.getSize());
+    main_bus.bind_target(mem_trace.target, 3, 0x31000000, mem_trace.getSize());
+    main_bus.bind_target(mem_dram.target, 4, 0x40000000, mem_dram.getSize());
+    main_bus.bind_target(eth0.socket, 5, 0x11000000, 4_KiB);
+    main_bus.bind_target(eth1.socket, 6, 0x11001000, 4_KiB);
     size_t i = 0;
     for(const auto& e : PipelinedMemoryBusToApbBridge_map) {
-        apbBridge.initiator.at(i)(e.target);
-        apbBridge.set_target_range(i, e.start, e.size);
+        peripheral_bus.initiator.at(i)(e.target);
+        peripheral_bus.set_target_range(i, e.start, e.size);
         i++;
     }
 
