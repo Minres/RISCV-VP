@@ -22,10 +22,10 @@ tb::tb(const sc_core::sc_module_name& nm)
     top.t0_clear_i(t0_clear_i);
     top.t0_tick_i(t0_tick_i);
     top.mspi0(spi());
-    top.eth0_tx(eth0to1.tsck);
-    eth0to1.isck(top.eth1_rx);
-    top.eth1_tx(eth1to0.tsck);
-    eth1to0.isck(top.eth0_rx);
+    top.eth0_tx(eth0to1.rx);
+    eth0to1.tx(top.eth1_rx);
+    top.eth1_tx(eth1to0.rx);
+    eth1to0.tx(top.eth0_rx);
     spi(0)(qspi_mem.spi_t);
     top.clk_i(clk_i);
     clk_i = 10_ns;
