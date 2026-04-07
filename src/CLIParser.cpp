@@ -27,7 +27,7 @@ CLIParser::CLIParser(int argc, char* argv[])
         po::store(po::parse_command_line(argc, argv, desc), vm_); // can throw
         // --help option
         if(vm_.count("help")) {
-            std::cout << "DBT-RISE-TGC based virtual platform of TGC cores" << std::endl << desc << std::endl;
+            std::cout << "DBT-RISE-RISCV based virtual platform of TGC cores" << std::endl << desc << std::endl;
             exit(0);
         }
         po::notify(vm_); // throws on error, so do after help in case there are any problems
