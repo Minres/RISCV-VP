@@ -42,6 +42,7 @@ jmp_buf abrt;
 void ABRThandler(int sig) { longjmp(abrt, sig); }
 
 int sc_main(int argc, char* argv[]) {
+    // setenv("DBT_RISE_DISABLE_FULL_REGISTER_LIST", "1", 1);
     signal(SIGINT, ABRThandler);
     signal(SIGABRT, ABRThandler);
     signal(SIGSEGV, ABRThandler);
