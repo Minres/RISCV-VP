@@ -20,8 +20,8 @@ add_executable(${PROJECT_NAME}
 	vp/system.cpp
 )
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_LIST_DIR})
-target_force_link_libraries(${PROJECT_NAME} PUBLIC dbt-rise-riscv_sc)
-target_link_libraries(${PROJECT_NAME} PUBLIC vpvper_generic vpvper_minres ${BOOST_program_options_LIBRARY})
+target_force_link_libraries(${PROJECT_NAME} PUBLIC dbt-rise-riscv_sc_sig)
+target_link_libraries(${PROJECT_NAME} PUBLIC vpvper::generic vpvper::minres_sig ${BOOST_program_options_LIBRARY})
 if(TARGET Boost::program_options)
 	target_link_libraries(${PROJECT_NAME} PUBLIC Boost::program_options Boost::thread)
 else()
