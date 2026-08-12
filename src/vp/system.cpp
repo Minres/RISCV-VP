@@ -129,7 +129,7 @@ void system::start_of_simulation() {
         gp.set_command(tlm::TLM_IGNORE_COMMAND);
         gp.set_data_length(trace_buffer.size());
         gp.set_streaming_width(trace_buffer.size());
-        scc::host_mem_map_extension ext{trace_buffer.data()};
+        scc::host_mem_map_extension ext{trace_buffer.data(), trace_buffer.size()};
         gp.set_extension(&ext);
         mem_trace.target.get_base_interface().transport_dbg(gp);
         gp.set_extension<scc::host_mem_map_extension>(nullptr);

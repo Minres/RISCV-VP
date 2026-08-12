@@ -56,7 +56,7 @@ public:
     system(sc_core::sc_module_name nm);
 
 private:
-#include "../vp/gen/PipelinedMemoryBusToApbBridge.h" // IWYU pragma: keep
+#include "gen/PipelinedMemoryBusToApbBridge.h" // IWYU pragma: keep
     sysc::riscv::core_complex<> core_complex{"core_complex"};
     scc::router<> main_bus, peripheral_bus;
     vpvper::minres::gpio_tl gpio0{"gpio0"};
