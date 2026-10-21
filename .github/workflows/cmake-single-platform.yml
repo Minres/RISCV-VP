@@ -35,7 +35,7 @@ jobs:
         pip3 install -r requirements.txt
 
     - name: Configure
-      run: cmake --preset ${{env.BUILD_TYPE}}
+      run: cmake --preset ${{env.BUILD_TYPE}} -DWITH_ASMJIT=ON
 
     - name: Build
       run: cmake --build ${{github.workspace}}/build/${{env.BUILD_TYPE}} --config ${{env.BUILD_TYPE}}
