@@ -39,8 +39,8 @@ class Pkg(ConanFile):
 
     def requirements(self):
         self.requires("systemc/3.0.1")
-        self.requires("fmt/8.0.1")
-        self.requires("spdlog/1.9.2")
+        self.requires("fmt/12.1.0")
+        self.requires("spdlog/1.17.0")
         self.requires("boost/1.85.0")
         self.requires("abseil/20250127.0")
         self.requires("elfio/3.12")
