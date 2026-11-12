@@ -29,3 +29,4 @@ CMakeSettings.json
 *.pcap
 *.ihex
 *.trx
+*.json
