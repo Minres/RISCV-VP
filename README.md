@@ -11,7 +11,7 @@ provides a comprehensive and consistent solution to develop processor cores.
 
 ## Ultra Quick start
 
-Using gitpod you can run the VP in the cloud. Just visit [Gitpod.io](https://www.gitpod.io/#https://github.com/Minres/RISCV-VP/tree/develop)
+Using gitpod you can run the VP in the cloud. Just visit [Gitpod.io](https://www.gitpod.io/#https://github.com/Minres/RISCV-VP/tree/main)
 and follow the instructions. After the build finished you can run
 
 ```
@@ -50,13 +50,13 @@ conan profile detect
 Building the VP is as simple as:
 
 ```
-cmake -S . -B build/Release --preset Release && cmake --build build/Release -j24
+cmake --preset Release && cmake --build build/Release -j24
 ```
 
 Building a debug version is analogous:
 
 ```
-cmake -S . -B build/Debug --preset Debug && cmake --build build/Debug -j24
+cmake --preset Debug && cmake --build build/Debug -j24
 ```
 
 To build some firmware you need to install a RISC-V toolchain like https://github.com/riscv/riscv-tools.
